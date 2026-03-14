@@ -27,15 +27,16 @@ export default function LoginContainer() {
         >
             {/* navbar logo */}
             <div className="flex items-center gap-2 p-6">
-                <Image src="/image/logo-1.webp" alt="TerasDesa" width={32} height={32} />
-                <span className="text-white font-bold text-lg">TerasDesa</span>
+                <Image src="/image/logo-tr.webp" alt="TerasDesa" width={50} height={50} />
+                <span className="text-black font-bold text-xl font-poppins">TerasDesa</span>
             </div>
 
             {/* card */}
             <div className="flex-1 flex items-center justify-center">
-                <div className="flex rounded-[78px] overflow-hidden shadow-2xl w-[881px] h-[554px] ">
+                <div className="relative flex shadow-2xl w-[881px] h-[554px]">
+                    
                     {/* panel kiri */}
-            <div className="bg-white w-1/2 p-10 flex flex-col justify-center">
+            <div className="bg-white w-full rounded-[78px] p-10 pr-[55%] flex flex-col justify-center">
                 {mode === 'login' ? (
                     <LoginForm 
                     username={username}
@@ -62,17 +63,18 @@ export default function LoginContainer() {
             </div>
 
             {/* panel kanan */}
-            <div className="bg-[#3a5a2a] w-1/2 p-10 flex flex-col justify-center text-white text-center gap-4">
-                <h3 className="text-2xl font-bold"> 
+            <div className="absolute right-0 top-0 h-full w-1/2 p-10 flex flex-col justify-center text-white text-center gap-4 rounded-tl-[150px] rounded-tr-[78px] rounded-bl-[150px] rounded-br-[78px]]"
+                    style={{background: "linear-gradient(to bottom, #394A0E, #88B021)"}}>
+                <h3 className="text-4xl font-bold"> 
                     {mode === 'login' ? 'Selamat Datang Kembali!' : 'Selamat Datang!'}
                     </h3>   
-                <p className="text-sm leading-relaxed">
-                    Kami menghargai partisipasimu dalam membangun layanan publik yang lebih baik.
+                <p className="text-sm leading-relaxed font-poppins">
+                    Kami menghargai partisipasimu dalam membangun layanan publik yang lebih baik. <br />
                     Laporkan, pantau, dan bantu ciptakan perubahan positif.
                 </p>
                 <button 
                     onClick={() => setMode(mode === 'login' ? 'register' : 'login')}
-                    className="border border-white rounded-[12px] px-6 py-2 text-sm font-medium hover:bg-white hover:text-[#3a5a2a] transition w-full">
+                    className="border border-white rounded-[12px] px-4 py-2 text-sm font-medium hover:bg-white hover:text-[#3a5a2a] transition w-full">
                     {mode === 'login' ? 'Buat Akun' : 'Masuk'}
                     </button>
                 </div>

@@ -1,8 +1,8 @@
 'use client'
 import {useState} from "react"
 import Image from 'next/image'
-import LoginForm from '../component/LoginForm' 
-import RegisterForm from "../component/RegisterForm"
+import LoginForm from '../components/LoginForm' 
+import RegisterForm from "../components/RegisterForm"
 
 type AuthMode = 'login' | 'register'
 
@@ -22,7 +22,7 @@ export default function LoginContainer() {
     }
 
     return (
-        <div className="min-h-screen w-full flex flex-col bg-cover bg-center"
+        <div className="min-h-screen w-full flex flex-col bg-cover bg-center absolute inset-0 bg-black/20"
         style={{backgroundImage : "url('/image/bg.webp')"}}
         >
             {/* navbar logo */}

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
  
 interface ProyekCardSPProps {
   title: string;
@@ -52,9 +53,11 @@ export default function ProyekCardSP({
         </div>
  
         {/* Tombol Lihat Detail */}
-        <button className="w-full flex items-center justify-center py-4 bg-[#2F3E0C] rounded-xl hover:bg-[#3d5010] transition-colors">
-          <span className="text-2xl font-semibold text-[#E2E5DB]">Lihat Detail</span>
-        </button>
+        <Link href= "/detail-proyek">
+          <button className="w-full flex items-center justify-center py-4 bg-[#2F3E0C] rounded-xl hover:bg-[#3d5010] transition-colors">
+            <span className="text-2xl font-semibold text-[#E2E5DB]">Lihat Detail</span>
+          </button>
+        </Link>
       </div>
     </div>
   );

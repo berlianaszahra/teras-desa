@@ -23,11 +23,11 @@ export default function LoginContainer() {
 
     return (
         <div className="min-h-screen w-full flex flex-col bg-cover bg-center absolute inset-0 bg-black/20"
-        style={{backgroundImage : "url('/image/bg.webp')"}}
+        style={{backgroundImage : "url('/images/bg.webp')"}}
         >
             {/* navbar logo */}
             <div className="flex items-center gap-2 p-6">
-                <Image src="/image/logo-tr.webp" alt="TerasDesa" width={50} height={50} />
+                <Image src="/images/logo-tr.webp" alt="TerasDesa" width={50} height={50} />
                 <span className="text-black font-bold text-xl font-poppins">TerasDesa</span>
             </div>
 

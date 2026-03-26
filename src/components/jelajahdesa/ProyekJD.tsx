@@ -1,6 +1,6 @@
 import ProjectCard from "./ProjectCardJD";
 import Link from "next/link";
- 
+
 const projects = [
   {
     id: 1,
@@ -35,24 +35,30 @@ const projects = [
     image: "/images/jembatan.webp",
   },
 ];
- 
+
 export default function ProyekJD() {
   return (
-    <section className="px-[122px] flex flex-col gap-5">
+    <section className="px-4 md:px-10 lg:px-[122px] flex flex-col gap-4 md:gap-5">
+
       {/* Header */}
-      <div className="flex flex-row justify-between items-center">
-        <h2 className="text-[40px] font-bold text-[#252525] leading-[53px]">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+
+        <h2 className="text-xl md:text-3xl lg:text-[40px] font-bold text-[#252525]">
           Proyek Desa
         </h2>
-        <Link href="/semua-proyek">
-          <button className="px-8 py-4 rounded-[10px] text-xl font-medium text-[#3F5210] hover:underline">
-            Lihat Semua Proyek
-          </button>
+
+        <Link
+          href="/semua-proyek"
+          className="text-sm md:text-lg font-medium text-[#3F5210] hover:underline"
+        >
+          Lihat Semua Proyek
         </Link>
+
       </div>
- 
-      {/* Cards – horizontal scroll */}
-      <div className="flex flex-row gap-[37px] overflow-x-auto pb-4 scrollbar-hide">
+
+      {/* Cards */}
+      <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 scrollbar-hide">
+
         {projects.map((p) => (
           <ProjectCard
             key={p.id}
@@ -63,8 +69,9 @@ export default function ProyekJD() {
             image={p.image}
           />
         ))}
+
       </div>
+
     </section>
   );
 }
- 

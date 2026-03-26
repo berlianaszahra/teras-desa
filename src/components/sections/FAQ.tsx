@@ -3,23 +3,23 @@
 import { useState } from "react";
 
 export default function FAQ() {
-    return (
-        <section className="w-full flex justify-center py-24 bg-[#F5F1E9]">
-      
-      <div className="w-[1196px] flex flex-col gap-12">
+  return (
+    <section className="w-full flex justify-center py-12 md:py-20 lg:py-24 bg-[#F5F1E9]">
+
+      <div className="w-full max-w-[1196px] px-4 md:px-10 flex flex-col gap-8 md:gap-12">
 
         {/* Title */}
         <div className="text-center">
-          <h2 className="text-[40px] font-bold text-[#252525]">
+          <h2 className="text-2xl md:text-3xl lg:text-[40px] font-bold text-[#252525]">
             Pertanyaan Umum
           </h2>
 
-          <div className="w-[200px] h-[8px] mx-auto mt-4 rounded-full 
+          <div className="w-[120px] md:w-[200px] h-[6px] md:h-[8px] mx-auto mt-3 md:mt-4 rounded-full 
                           bg-gradient-to-r from-[#3F5210] to-[#8DB824]" />
         </div>
 
-        {/* List FAQ */}
-        <div className="flex flex-col gap-4">
+        {/* FAQ List */}
+        <div className="flex flex-col gap-3 md:gap-4">
           <FAQItem 
             question="Apa itu TerasDesa?"
             answer="TerasDesa adalah platform transparansi anggaran desa yang membantu masyarakat memahami penggunaan dana desa secara terbuka."
@@ -43,9 +43,8 @@ export default function FAQ() {
 
       </div>
     </section>
-    )
+  );
 }
-
 
 function FAQItem({
   question,
@@ -58,29 +57,27 @@ function FAQItem({
 
   return (
     <div
-      className="bg-white rounded-xl shadow-md p-6 cursor-pointer transition"
+      className="bg-white rounded-xl md:rounded-2xl shadow-sm md:shadow-md p-4 md:p-6 cursor-pointer transition hover:shadow-lg"
       onClick={() => setOpen(!open)}
     >
-      
+
       {/* Question */}
       <div className="flex justify-between items-center">
-        <h3 className="text-[20px] font-semibold text-[#26310A]">
+        <h3 className="text-sm md:text-lg lg:text-[20px] font-semibold text-[#26310A]">
           {question}
         </h3>
 
-        <span className="text-xl">
+        <span className="text-lg md:text-xl">
           {open ? "-" : "+"}
         </span>
       </div>
 
       {/* Answer */}
       {open && (
-        <p className="mt-4 text-[18px] text-[#252525] leading-relaxed">
+        <p className="mt-3 md:mt-4 text-sm md:text-base lg:text-[18px] text-[#252525] leading-relaxed">
           {answer}
         </p>
       )}
     </div>
   );
 }
-
-export { FAQItem };

@@ -2,6 +2,8 @@ import HeroDP       from "@/components/detailproyek/HeroDP";
 import DeskripsiDP  from "@/components/detailproyek/DeskripsiDP";
 import UpdateDP     from "@/components/detailproyek/UpdateDP";
 import TransparansiDP from "@/components/detailproyek/TransparansiDP";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
  
 // Data dummy — nanti bisa di-fetch dari API berdasarkan [id]
 const proyek = {
@@ -22,7 +24,9 @@ const proyek = {
  
 export default function DetailProyekPage() {
   return (
+    
     <main className="relative bg-[#F5F1E9] min-h-screen font-[Poppins] flex flex-col gap-10 pb-20">
+        <Navbar />
       {/* Hero — absolute positioned, butuh padding top untuk konten di bawahnya */}
       <div className="relative w-full" style={{ height: 870 }}>
         <HeroDP
@@ -44,6 +48,8 @@ export default function DetailProyekPage() {
  
       {/* Transparansi Dana */}
       <TransparansiDP />
+
+      <Footer />
     </main>
   );
 }

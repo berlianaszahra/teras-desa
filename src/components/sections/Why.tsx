@@ -1,6 +1,6 @@
 export default function Why () {
     return (
-        <section className="w-full flex justify-center py-24">
+        <section className="w-full flex justify-center py-24 bg-[#F5F1E9]">
       
       <div className="w-[1196px] flex flex-col items-center gap-12">
 

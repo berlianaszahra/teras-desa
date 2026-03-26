@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function FAQ() {
     return (
-        <section className="w-full flex justify-center py-24 bg-[#F9F9F9]">
+        <section className="w-full flex justify-center py-24 bg-[#F5F1E9]">
       
       <div className="w-[1196px] flex flex-col gap-12">
 

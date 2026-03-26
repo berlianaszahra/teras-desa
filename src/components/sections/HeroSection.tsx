@@ -1,17 +1,16 @@
 import Navbar from "../layout/Navbar"; 
+import Link from "next/link";
 
 export default function HeroSection() {
     return (
-       <section className="relative h-screen">
+       <section className="relative h-screen bg-[#F5F1E9]">
 
         <Navbar />
         <section className="relative w-full h-[805px] rounded-b-[30px] overflow-hidden">
       
       {/* Background Image */}
       <img
-        src="/images/bg.webp"
-        alt="hero"
-        className="absolute inset-0 w-full h-full object-cover"
+        src="/images/bg.webp" alt="hero" className="absolute inset-0 w-full h-full object-cover"
       />
 
       {/* Gradient Overlay */}
@@ -29,6 +28,7 @@ export default function HeroSection() {
           Transparansi Evaluasi Rencana Anggaran & Sarana Desa
         </p>
 
+      <Link href="/jelajah-desa">
         <button className="mt-8 w-[251px] h-[56px] 
                    flex items-center justify-center
                    bg-[#556117] border border-[#FDF5E3] 
@@ -36,6 +36,7 @@ export default function HeroSection() {
                    hover:scale-105 transition">
             Jelajahi Desa
         </button>
+      </Link>
 
       </div>
     </section>

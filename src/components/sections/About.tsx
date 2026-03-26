@@ -1,11 +1,11 @@
 export default function About() {
     return (
-        <section className="w-full flex justify-center py-24">
+        <section className="w-full flex justify-center py-24 bg-[#F5F1E9]">
       
       <div className="w-[1196px] flex items-center gap-16">
 
         {/* LEFT (Image / Shape) */}
-        <div className="relative w-[596px] h-[513px] rounded-[30px] overflow-x-hidden">
+        <div className="relative w-[596px] h-[513px] rounded-[30px] overflow-hidden">
 
         {/* kotak belakang */}
         <div className="absolute inset-0 bg-[#3F5210] rounded-[30px] z-0" />
@@ -15,7 +15,7 @@ export default function About() {
 
         {/* gambar */}
         <img
-            src="/images/bapak.webp"
+src="/images/bapak.webp"
             alt="Image Bapak Desa"
             className="absolute w-[474px] h-[601px] top-[-60px] left-[30px] z-20"
         />

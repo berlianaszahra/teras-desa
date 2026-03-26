@@ -1,6 +1,6 @@
 export default function Stats() {
     return (
-        <section className="w-full flex justify-center -mt-24 z-10 relative">
+        <section className="w-full flex justify-center -mt-24 z-10 relative bg-[#F5F1E9]">
             <div className="w-[1196px] flex justify-center gap-[50px]
                             px-2 py-[60px] rounded-[30px] 
                             bg-gradient-to-r from from-[#391A05] to-[#9F490E] shadow-md">

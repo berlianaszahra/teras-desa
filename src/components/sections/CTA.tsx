@@ -1,6 +1,6 @@
 export function CTA() {
 return (
-    <section className="relative w-full h-[585px] overflow-hidden">
+    <section className="relative w-full h-[585px] overflow-hidden bg-[#F5F1E9]">
 
     {/* Background Image */}
     <div
@@ -11,7 +11,7 @@ return (
     />
 
     {/* Gradient Overlay */}
-    <div className="absolute inset-0 bg-gradient-to-r 
+    <div className="absolute inset-0 bg-linear-to-r 
                     from-[#FCEFD4]/60 to-[#968E7E]/60" />
 
     {/* Top Bar */}

@@ -1,9 +1,9 @@
-export default function Hero() {
+export default function HeroSP() {
   return (
-    <section className="px-[122px] pt-[237px] flex flex-col gap-10 bg-[#F5F1E9]">
+    <section className="px-[122px] pt-[237px] flex flex-col gap-10">
       {/* Judul */}
       <h1 className="text-[64px] font-bold text-[#252525] leading-[131.8%]">
-        Jelajah Desa
+        Semua Proyek
       </h1>
  
       {/* Banner Total Dana */}
@@ -22,5 +22,6 @@ export default function Hero() {
         </p>
       </div>
     </section>
-  )
+  );
 }
+ 

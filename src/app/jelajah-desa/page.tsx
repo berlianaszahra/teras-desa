@@ -1,64 +1,21 @@
-import HeroJD from "@/components/jelajahdesa/HeroJD";
-import ProjectCard from "@/components/jelajahdesa/ProjectCard";
-import Footer from "@/components/layout/Footer";
+import HeroJD    from "@/components/jelajahdesa/HeroJD";
+import StatsJD   from "@/components/jelajahdesa/StatsJD";
+import ProyekJD  from "@/components/jelajahdesa/ProyekJD";
+import LaporanJD from "@/components/jelajahdesa/LaporanJD";
+import CTAJD     from "@/components/jelajahdesa/CtaJD";
 import Navbar from "@/components/layout/Navbar";
-import { CTA } from "@/components/sections/CTA";
-import Stats from "@/components/sections/Stats";
-
+import Footer from "@/components/layout/Footer";
+ 
 export default function JelajahDesa() {
-
-  const projects = [
-    {
-      title: "Pembangunan Jalan",
-      status: "Selesai",
-      progress: 100,
-      dana: "Rp. 120.000.000",
-    },
-    {
-      title: "Lampu Jalan Desa",
-      status: "Perencanaan",
-      progress: 10,
-      dana: "Rp. 45.000.000",
-    },
-    {
-      title: "Renovasi Balai Desa",
-      status: "Berjalan",
-      progress: 65,
-      dana: "Rp. 85.000.000",
-    },
-  ];
-
   return (
-    <>
+    <main className="bg-[#F5F1E9] min-h-screen font-[Poppins] flex flex-col gap-16 pb-0">
       <Navbar />
       <HeroJD />
-      <Stats />
-
-      {/* PROYEK */}
-      <section className="w-full flex justify-center py-16">
-        <div className="w-[1196px] flex flex-col gap-6">
-
-          <div className="flex justify-between items-center">
-            <h2 className="text-[40px] font-bold text-[#252525]">
-              Proyek Desa
-            </h2>
-
-            <button className="text-[#3F5210] text-[20px] font-medium">
-              Lihat Semua Proyek
-            </button>
-          </div>
-
-          <div className="flex gap-6 overflow-x-auto pb-4">
-            {projects.map((item, index) => (
-              <ProjectCard key={index} {...item} />
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      <CTA />
+      <StatsJD />
+      <ProyekJD />
+      <LaporanJD />
+      <CTAJD />
       <Footer />
-    </>
+    </main>
   );
 }

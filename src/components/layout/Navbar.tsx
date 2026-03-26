@@ -23,7 +23,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
 
           {/* Daftar (outline) */}
-          <Link href="/RegisterForm">
+          <Link href="/login">
             <button className="px-2 py-2 rounded-xl border-2 border-[#556117] w-[175px] h-[49px]
                                text-[#556117] font-semibold text-xl 
                                hover:bg-[#556117] hover:text-[#ECEEE7] transition">
@@ -32,7 +32,7 @@ export default function Navbar() {
           </Link>
 
           {/* Masuk (filled) */}
-          <Link href="/LoginForm">
+          <Link href="/login">
             <button className="px-2 py-2 rounded-xl border-2 border-[#556117] bg-[#556117] w-[175px] h-[49px]
                                text-[#ECEEE7] font-semibold text-xl
                                hover:bg-[#556117] hover:text-[#ECEEE7] transition">

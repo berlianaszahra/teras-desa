@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function CTA() {
 return (
     <section className="relative w-full h-[585px] overflow-hidden bg-[#F5F1E9]">
@@ -29,6 +31,7 @@ return (
         dan ikut berkontribusi dalam kemajuan desa.
         </p>
 
+        <Link href="/jelajah-desa">
         <button className="mt-4 w-[251px] h-[56px] flex items-center justify-center
                         bg-[#556117] rounded-[16px]
                         text-white font-semibold text-[20px]
@@ -36,6 +39,8 @@ return (
                         transition duration-300">
         Jelajah Desa
         </button>
+        </Link>
+
 
     </div>
     </section>

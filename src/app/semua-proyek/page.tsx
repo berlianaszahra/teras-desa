@@ -3,7 +3,6 @@ import FilterSP      from "@/components/semua-proyek/FilterSP";
 import DaftarProyekSP from "@/components/semua-proyek/DaftarProyekSP";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { CTA } from "@/components/sections/CTA";
  
 export default function SemuaProyek() {
   return (
@@ -12,7 +11,6 @@ export default function SemuaProyek() {
       <HeroSP />
       <FilterSP />
       <DaftarProyekSP />
-      <CTA />
       <Footer />
     </main>
   );

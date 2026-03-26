@@ -1,8 +1,8 @@
 'use client'
 import {useState} from "react"
 import Image from 'next/image'
-import LoginForm from '../components/LoginForm' 
-import RegisterForm from "../components/RegisterForm"
+import LoginForm from './LoginForm' 
+import RegisterForm from "./RegisterForm"
 
 type AuthMode = 'login' | 'register'
 

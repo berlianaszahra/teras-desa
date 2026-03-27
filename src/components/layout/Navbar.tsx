@@ -1,47 +1,83 @@
-import Link from 'next/link';
+"use client";
+
+import Link from "next/link";
+import { useState } from "react";
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
   return (
     <nav className="absolute top-0 left-0 w-full z-50">
-      
-      <div className="max-w-7xl mx-auto px-10 py-4 flex items-center justify-between
-                      bg-transparent rounded-2xl mt-4">
+
+      <div className="max-w-7xl mx-auto px-4 md:px-10 py-4 flex items-center justify-between">
 
         {/* Logo */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <img 
             src="/images/logo-tr.webp" 
             alt="logo navbar" 
-            className="w-25 h-25"
+            className="w-10 h-10 md:w-14 md:h-14"
           />
-          <span className="text-black font-bold text-xl">
+          <span className="text-black font-bold text-lg md:text-xl">
             TerasDesa
           </span>
         </div>
 
-        {/* Button */}
-        <div className="flex items-center gap-3">
+        {/* DESKTOP MENU */}
+        <div className="hidden md:flex items-center gap-3">
 
-          {/* Daftar (outline) */}
-          <Link href="/login">
-            <button className="px-2 py-2 rounded-xl border-2 border-[#556117] w-[175px] h-[49px]
-                               text-[#556117] font-semibold text-xl 
-                               hover:bg-[#556117] hover:text-[#ECEEE7] transition">
-              Daftar
-            </button>
+          <Link
+            href="/login"
+            className="px-4 py-2 rounded-xl border-2 border-[#556117]
+                       text-[#556117] font-semibold text-sm md:text-base
+                       hover:bg-[#556117] hover:text-[#ECEEE7] transition"
+          >
+            Daftar
           </Link>
 
-          {/* Masuk (filled) */}
-          <Link href="/login">
-            <button className="px-2 py-2 rounded-xl border-2 border-[#556117] bg-[#556117] w-[175px] h-[49px]
-                               text-[#ECEEE7] font-semibold text-xl
-                               hover:bg-[#556117] hover:text-[#ECEEE7] transition">
-              Masuk
-            </button>
+          <Link
+            href="/login"
+            className="px-4 py-2 rounded-xl border-2 border-[#556117] bg-[#556117]
+                       text-[#ECEEE7] font-semibold text-sm md:text-base
+                       hover:bg-[#445012] transition"
+          >
+            Masuk
           </Link>
 
         </div>
+
+        {/* HAMBURGER */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="md:hidden text-2xl"
+        >
+          ☰
+        </button>
+
       </div>
+
+      {/* MOBILE MENU */}
+      {open && (
+        <div className="md:hidden bg-white shadow-md px-4 py-4 flex flex-col gap-3">
+
+          <Link
+            href="/login"
+            className="w-full text-center px-4 py-2 rounded-xl border border-[#556117]
+                       text-[#556117] font-semibold"
+          >
+            Daftar
+          </Link>
+
+          <Link
+            href="/login"
+            className="w-full text-center px-4 py-2 rounded-xl bg-[#556117]
+                       text-white font-semibold"
+          >
+            Masuk
+          </Link>
+
+        </div>
+      )}
 
     </nav>
   );

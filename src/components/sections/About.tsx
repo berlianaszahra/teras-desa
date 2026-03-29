@@ -5,23 +5,23 @@ export default function About() {
       <div className="w-full max-w-[1196px] px-4 md:px-10 flex flex-col lg:flex-row items-center gap-8 md:gap-12 lg:gap-16">
 
         {/* LEFT */}
-        <div className="relative w-full max-w-[500px] h-[350px] md:h-[450px] lg:w-[596px] lg:h-[513px]">
+        <div className="relative w-full max-w-[500px] lg:w-[596px] h-[350px] md:h-[450px] lg:h-[513px] pt-20 md:pt-28 lg:pt-32">
 
-          {/* Background (ke-clip) */}
+          {/* Background */}
           <div className="absolute inset-0 rounded-2xl md:rounded-[30px] overflow-hidden z-0">
             <div className="absolute inset-0 bg-[#3F5210]" />
             <div className="absolute w-[70%] h-[70%] bg-[#2F3E0C] rounded-full top-6 left-6 md:top-8 md:left-10" />
           </div>
 
-          {/* Image (keluar kotak) */}
+          {/* Image */}
           <img
             src="/images/bapak.webp"
             alt="Image Bapak Desa"
             className="
               absolute 
               w-[80%] max-w-[474px] h-auto 
-              left-[10%] 
-              top-[-60px] md:top-[-80px] lg:top-[-90px]
+              left-1/2 -translate-x-1/2
+              bottom-[-5px] md:bottom-[-8px] lg:bottom-[-12px]
               z-20
               drop-shadow-[0_10px_20px_rgba(0,0,0,0.3)]
             "

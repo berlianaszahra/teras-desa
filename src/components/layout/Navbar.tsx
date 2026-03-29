@@ -27,7 +27,7 @@ export default function Navbar() {
         {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-3">
           <Link
-            href="/login"
+            href="/daftar"
             className="px-4 py-2 rounded-xl border-2 border-[#556117]
                        text-[#556117] font-semibold text-sm md:text-base
                        hover:bg-[#556117] hover:text-[#ECEEE7] transition"
@@ -36,7 +36,7 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/login"
+            href="/masuk"
             className="px-4 py-2 rounded-xl border-2 border-[#556117] bg-[#556117]
                        text-[#ECEEE7] font-semibold text-sm md:text-base
                        hover:bg-[#445012] transition"
@@ -66,7 +66,7 @@ export default function Navbar() {
           rounded-b-2xl
         ">
           <Link
-            href="/login"
+            href="/daftar"
             onClick={() => setOpen(false)}
             className="w-full text-center px-4 py-2 rounded-xl border border-[#556117]
                        text-[#556117] font-semibold"
@@ -75,7 +75,7 @@ export default function Navbar() {
           </Link>
 
           <Link
-            href="/login"
+            href="/masuk"
             onClick={() => setOpen(false)}
             className="w-full text-center px-4 py-2 rounded-xl bg-[#556117]
                        text-white font-semibold"

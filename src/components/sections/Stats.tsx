@@ -1,4 +1,4 @@
-const data = [
+const StatsDummy = [
   { value: 24, label: "Total Anggaran" },
   { value: 12, label: "Proyek Aktif" },
   { value: 8, label: "Proyek Selesai" },
@@ -22,7 +22,7 @@ export default function Stats() {
         "
       >
         
-        {data.map((item, i) => (
+        {StatsDummy.map((item, i) => (
           <div
             key={i}
             className="

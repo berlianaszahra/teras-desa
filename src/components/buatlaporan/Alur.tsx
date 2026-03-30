@@ -1,4 +1,3 @@
-
 const steps = [
   {
     icon: (
@@ -45,36 +44,44 @@ const steps = [
     desc: "Laporan Anda akan terus ditindaklanjuti hingga terselesaikan",
   },
 ];
- 
+
 export default function AlurLaporan() {
   return (
-    <div className="mx-[122px] relative flex flex-row justify-around items-start py-10">
-      {/* Garis penghubung horizontal */}
-      <div className="absolute top-[80px] left-[15%] right-[15%] h-px border-t border-[#252525]" />
- 
-      {steps.map((step, i) => (
-        <div key={i} className="flex flex-col items-center gap-[21px] w-[192px] z-10">
-          {/* Lingkaran ikon */}
-          <div
-            className={`w-[160px] h-[160px] rounded-full flex items-center justify-center ${
-              step.bgActive ? "bg-[#394A0E]" : "bg-[#C3C9B5]"
-            }`}
-          >
-            {step.icon}
+    <div className="px-6 md:px-12 lg:px-24 py-12 relative">
+
+      {/* Garis (hanya tampil di desktop) */}
+      <div className="hidden lg:block absolute top-[80px] left-[10%] right-[10%] border-t border-[#252525]" />
+
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
+
+        {steps.map((step, i) => (
+          <div key={i} className="flex flex-col items-center text-center max-w-[250px] z-10">
+
+            {/* Circle */}
+            <div
+              className={`
+                w-[120px] h-[120px] md:w-[140px] md:h-[140px] lg:w-[160px] lg:h-[160px]
+                rounded-full flex items-center justify-center
+                ${step.bgActive ? "bg-[#394A0E]" : "bg-[#C3C9B5]"}
+              `}
+            >
+              {step.icon}
+            </div>
+
+            {/* Text */}
+            <div className="mt-6 space-y-3">
+              <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-[#252525]">
+                {step.label}
+              </h3>
+
+              <p className="text-sm md:text-base text-[#2C2C2C] leading-relaxed">
+                {step.desc}
+              </p>
+            </div>
           </div>
- 
-          {/* Label & deskripsi */}
-          <div className="flex flex-col gap-[22px] items-center">
-            <span className="text-2xl font-semibold text-[#252525] text-center tracking-[0.5px]">
-              {step.label}
-            </span>
-            <span className="text-base font-normal text-[#2C2C2C] text-center tracking-[0.5px] leading-[120%]">
-              {step.desc}
-            </span>
-          </div>
-        </div>
-      ))}
+        ))}
+
+      </div>
     </div>
   );
 }
- 

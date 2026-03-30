@@ -4,7 +4,7 @@ import { useState } from "react";
  
 type StatusType = "Diproses" | "Diterima" | "Selesai";
  
-interface Laporan {
+interface TabelDana {
   no: number;
   namaproyek: string;
   tanggallaporan: string;
@@ -12,7 +12,7 @@ interface Laporan {
   status: StatusType;
 }
  
-const laporanData: Laporan[] = [
+const laporanDana: TabelDana[] = [
   { no: 1, namaproyek: "Kerusakan Jalan Utama",  tanggallaporan: "24 Maret 2026", lokasi: "Dusun 1",       status: "Selesai"  },
   { no: 2, namaproyek: "Lampu Jalan Mati",          tanggallaporan: "23 Maret 2026", lokasi: "RT 02/ RW 03",  status: "Diproses" },
   { no: 3, namaproyek: "Saluran Air Tersumbat",     tanggallaporan: "12 Maret 2026", lokasi: "Dusun 3",       status: "Diterima" },
@@ -69,7 +69,7 @@ function StatusDropdown({
 }
  
 export default function TabelDanaAdmin() {
-  const [data, setData] = useState<Laporan[]>(laporanData);
+  const [data, setData] = useState<TabelDana[]>(laporanDana);
  
   function updateStatus(no: number, status: StatusType) {
     setData((prev) => prev.map((r) => r.no === no ? { ...r, status } : r));

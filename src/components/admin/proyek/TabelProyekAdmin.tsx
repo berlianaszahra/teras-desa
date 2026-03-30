@@ -1,41 +1,85 @@
-"use client";
- 
+'use client';
+
 import { useState } from "react";
  
-type StatusProyek = "Diproses" | "Diterima" | "Selesai";
+type StatusType = "Diproses" | "Diterima" | "Selesai";
  
-interface Proyek {
+interface TabelProyek {
   no: number;
-  nama: string;
-  tanggal: string;
+  namaproyek: string;
+  tanggallaporan: string;
   lokasi: string;
-  status: StatusProyek;
+  status: StatusType;
 }
  
-const proyekData: Proyek[] = [
-  { no: 1, nama: "Kerusakan Jalan Utama",    tanggal: "24 Maret 2026", lokasi: "Dusun 1",       status: "Diproses" },
-  { no: 2, nama: "Lampu Jalan Mati",          tanggal: "23 Maret 2026", lokasi: "RT 02/ RW 03",  status: "Diterima" },
-  { no: 3, nama: "Saluran Air Tersumbat",     tanggal: "12 Maret 2026", lokasi: "Dusun 3",       status: "Diproses" },
-  { no: 4, nama: "Fasilitas Posyandu Rusak",  tanggal: "10 Maret 2026", lokasi: "Dusun 1",       status: "Selesai"  },
-  { no: 5, nama: "Sampah Menumpuk",           tanggal: "08 Maret 2026",   lokasi: "RT 01 / RW 03", status: "Diproses" },
-  { no: 6, nama: "Drainase Tidak Lancar",     tanggal: "06 Maret 2026",   lokasi: "Dusun 2",       status: "Diproses" },
-  { no: 7, nama: "Lampu Balai Desa Mati",     tanggal: "07 Maret 2026",   lokasi: "Balai Desa",    status: "Selesai"  },
+const laporanDana: TabelProyek[] = [
+  { no: 1, namaproyek: "Kerusakan Jalan Utama",  tanggallaporan: "24 Maret 2026", lokasi: "Dusun 1",       status: "Selesai"  },
+  { no: 2, namaproyek: "Lampu Jalan Mati",          tanggallaporan: "23 Maret 2026", lokasi: "RT 02/ RW 03",  status: "Diproses" },
+  { no: 3, namaproyek: "Saluran Air Tersumbat",     tanggallaporan: "12 Maret 2026", lokasi: "Dusun 3",       status: "Diterima" },
+  { no: 4, namaproyek: "Fasilitas Posyandu Rusak",  tanggallaporan: "10 Maret 2026", lokasi: "Dusun 1",       status: "Diproses" },
+  { no: 5, namaproyek: "Sampah Menumpuk",           tanggallaporan: "08 Mar 2026",   lokasi: "RT 01 / RW 03", status: "Diterima" },
+  { no: 6, namaproyek: "Drainase Tidak Lancar",     tanggallaporan: "06 Mar 2026",   lokasi: "Dusun 2",       status: "Diproses" },
+  { no: 7, namaproyek: "Lampu Balai Desa Mati",     tanggallaporan: "07 Mar 2026",   lokasi: "Balai Desa",    status: "Selesai"  },
 ];
  
-const statusColors: Record<StatusProyek, string> = {
-  Diproses: "text-[#5E5151]",
-  Diterima: "text-[#5E5151]",
-  Selesai:  "text-[#5E5151]",
+const statusOptions: StatusType[] = ["Diproses", "Diterima", "Selesai"];
+ 
+const statusColor: Record<StatusType, string> = {
+  Diproses: "#E3AB55",
+  Diterima: "#9F490E",
+  Selesai:  "#3F5210",
 };
  
-const columns = ["No", "Nama Proyek", "Tanggal Laporan", "Lokasi", "Status", "Aksi"];
+function StatusDropdown({
+  value,
+  onChange,
+}: {
+  value: StatusType;
+  onChange: (v: StatusType) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative w-[122px]">
+      <button
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 w-full h-[37px] px-4 border border-black rounded-lg text-base font-medium text-[#190B02]"
+        style={{ background: statusColor[value] }}
+      >
+        <span className="flex-1 text-left">{value}</span>
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M5 8l5 5 5-5" stroke="#000" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
+      </button>
+      {open && (
+        <div className="absolute top-[37px] left-0 w-full border border-black rounded-b-lg overflow-hidden z-10">
+          {statusOptions.map((opt) => (
+            <button
+              key={opt}
+              onClick={() => { onChange(opt); setOpen(false); }}
+              className="w-full px-4 py-[9px] text-base font-medium text-[#190B02] text-left border-b border-black last:border-b-0"
+              style={{ background: "#E3AB55" }}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
  
 export default function TabelProyekAdmin() {
-  const [data] = useState<Proyek[]>(proyekData);
+  const [data, setData] = useState<TabelProyek[]>(laporanDana);
+ 
+  function updateStatus(no: number, status: StatusType) {
+    setData((prev) => prev.map((r) => r.no === no ? { ...r, status } : r));
+  }
+ 
+  const columns = ["No", "Nama Proyek", "Tanggal Laporan", "Lokasi" , "Status", "Aksi"];
  
   return (
     <div className="w-full bg-[#E6E5D9] rounded-[30px] p-6 flex flex-col gap-4">
-      <h2 className="text-xl font-semibold text-[#190B02]">Daftar Proyek</h2>
+      <h2 className="text-xl font-semibold text-[#190B02]">Daftar Laporan Warga</h2>
  
       {/* Tabel */}
       <div className="w-full rounded-[15px] overflow-hidden shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
@@ -45,12 +89,12 @@ export default function TabelProyekAdmin() {
             <div
               key={col}
               className={`flex items-center justify-center px-4 py-3 bg-[#3F5210] border-b border-[#190B02] text-base font-semibold text-[#FDF5E3]
-                ${col === "No"               ? "w-[60px]"  : ""}
-                ${col === "Nama Proyek"      ? "flex-1"    : ""}
-                ${col === "Tanggal Laporan"  ? "w-[173px]" : ""}
-                ${col === "Lokasi"           ? "w-[166px]" : ""}
-                ${col === "Status"           ? "w-[147px]" : ""}
-                ${col === "Aksi"             ? "w-[175px]" : ""}
+                ${col === "No"               ? "w-[60px]"   : ""}
+                ${col === "Nama Proyek"      ? "flex-1"     : ""}
+                ${col === "Tanggal Laporan"  ? "w-[166px]"  : ""}
+                ${col === "Lokasi"           ? "w-[157px]"  : ""}
+                ${col === "Status"           ? "w-[168px]"  : ""}
+                ${col === "Aksi"             ? "w-[99px]"   : ""}
               `}
             >
               {col}
@@ -61,43 +105,28 @@ export default function TabelProyekAdmin() {
         {/* Rows */}
         {data.map((row) => (
           <div key={row.no} className="flex flex-row border-b border-[#190B02] last:border-b-0 bg-[#FDF5E3]">
-            {/* No */}
             <div className="w-[60px] flex items-center justify-center px-4 py-4">
               <span className="text-base font-semibold text-[#5E5151]">{row.no}</span>
             </div>
-            {/* Nama Proyek */}
             <div className="flex-1 flex items-center px-4 py-4">
-              <span className="text-base font-semibold text-[#5E5151]">{row.nama}</span>
+              <span className="text-base font-semibold text-[#5E5151]">{row.namaproyek}</span>
             </div>
-            {/* Tanggal */}
-            <div className="w-[173px] flex items-center px-4 py-4">
-              <span className="text-base font-semibold text-[#5E5151]">{row.tanggal}</span>
-            </div>
-            {/* Lokasi */}
             <div className="w-[166px] flex items-center px-4 py-4">
+              <span className="text-base font-semibold text-[#5E5151]">{row.tanggallaporan}</span>
+            </div>
+            <div className="w-[157px] flex items-center px-4 py-4">
               <span className="text-base font-semibold text-[#5E5151]">{row.lokasi}</span>
             </div>
-            {/* Status */}
-            <div className="w-[147px] flex items-center px-4 py-4">
-              <span className={`text-base font-semibold ${statusColors[row.status]}`}>
-                {row.status}
-              </span>
+            <div className="w-[168px] flex items-center justify-center px-4 py-4">
+              <StatusDropdown
+                value={row.status}
+                onChange={(v) => updateStatus(row.no, v)}
+              />
             </div>
-            {/* Aksi — toggle Detail/Edit */}
-            <div className="w-[175px] flex items-center px-4 py-4">
-              <div className="relative w-[125px] h-[36px] bg-[#E2E5DB] rounded-[15px] overflow-hidden">
-                {/* Slider highlight */}
-                <div className="absolute left-0 top-0 w-[73px] h-full bg-[#C3C9B5] rounded-[15px]" />
-                {/* Labels */}
-                <div className="absolute inset-0 flex flex-row items-center">
-                  <button className="flex-1 text-base font-semibold text-[#190B02] text-center z-10">
-                    Detail
-                  </button>
-                  <button className="flex-1 text-base font-semibold text-[#190B02] text-center z-10">
-                    Edit
-                  </button>
-                </div>
-              </div>
+            <div className="w-[99px] flex items-center justify-center px-4 py-4">
+              <button className="px-4 py-2 bg-[#999999] rounded-2xl text-base font-semibold text-black hover:bg-[#888] transition-colors">
+                Detail
+              </button>
             </div>
           </div>
         ))}

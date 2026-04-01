@@ -1,11 +1,12 @@
+"use client";
+
 import SidebarAdmin from "@/components/admin/dashboard/SidebarAdmin";
- 
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen bg-[#F5F1E9] font-[Poppins]">
+    <div style={{ display: "flex", minHeight: "100vh", backgroundColor: "#F5F1E9" }}>
       <SidebarAdmin />
-      {/* Konten utama — offset dari sidebar */}
-      <main className="ml-[285px] flex-1">
+      <main style={{ flex: 1, padding: "24px", overflowX: "hidden" }}>
         {children}
       </main>
     </div>

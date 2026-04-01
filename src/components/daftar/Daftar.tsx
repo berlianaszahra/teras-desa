@@ -4,25 +4,22 @@ import { useState } from "react"
 
 interface RegisterFormProps {
   username: string
+  name: string
   email: string
   password: string
-  phone: string
+  phone_number: string
   onUsernameChange: (v: string) => void
+  onNameChange: (v: string) => void
   onEmailChange: (v: string) => void
   onPasswordChange: (v: string) => void
-  onPhoneChange: (v: string) => void
+  onPhoneNumberChange: (v: string) => void
   onSubmit: (e: React.FormEvent) => void
   onGoogleRegister: () => void
 }
 
 function GoogleIcon() {
   return (
-    <svg width="18" height="18" viewBox="0 0 48 48">
-      <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.7 2.2 30.2 0 24 0 14.7 0 6.7 5.4 2.8 13.3l7.8 6C12.5 13 17.8 9.5 24 9.5z" />
-      <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17z" />
-      <path fill="#FBBC05" d="M10.6 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6A24 24 0 0 0 0 24c0 3.9.9 7.5 2.5 10.8l8.1-6.1z" />
-      <path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7.5-5.8c-2 1.4-4.6 2.3-7.7 2.3-6.2 0-11.5-4.2-13.4-9.8l-8.1 6.1C6.6 42.6 14.7 48 24 48z" />
-    </svg>
+    < img src="/images/google2.png" alt="Logo Google" className="w-4 h-4" />
   )
 }
 
@@ -40,20 +37,21 @@ function EyeIcon({ open }: { open: boolean }) {
 }
 
 export default function RegisterForm({
-  username, email, password, phone,
-  onUsernameChange, onEmailChange, onPasswordChange, onPhoneChange,
+  username, name, email, password, phone_number,
+  onUsernameChange, onNameChange, onEmailChange, onPasswordChange, onPhoneNumberChange,
   onSubmit, onGoogleRegister,
 }: RegisterFormProps) {
   const [showPass, setShowPass] = useState(false)
-  const [errors, setErrors] = useState({ username: false, email: false, password: false, phone: false })
+  const [errors, setErrors] = useState({ username: false, name: false, email: false, password: false, phone_number: false })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const newErrors = {
       username: !username,
+      name: !name,
       email: !email,
       password: !password,
-      phone: !phone,
+      phone_number: !phone_number,
     }
     setErrors(newErrors)
     if (Object.values(newErrors).some(Boolean)) return
@@ -88,11 +86,23 @@ export default function RegisterForm({
         <input
           type="text"
           placeholder="Masukkan nama lengkap"
+          value={name}
+          onChange={(e) => { onNameChange(e.target.value); setErrors(p => ({ ...p, name: false })) }}
+          className={`border-2 rounded-[10px] px-3 py-2 text-[#252525] text-sm font-poppins placeholder:text-[#252525]/40 focus:outline-none focus:border-[#556117] ${errors.name ? 'border-red-500' : 'border-[#252525]'}`}
+        />
+        {errors.name && <span className="text-xs text-red-500 font-poppins">Nama lengkap wajib diisi</span>}
+      </div>
+
+      {/* Username */}
+      <div className="flex flex-col gap-1">
+        <input
+          type="text"
+          placeholder="Masukkan username"
           value={username}
           onChange={(e) => { onUsernameChange(e.target.value); setErrors(p => ({ ...p, username: false })) }}
           className={`border-2 rounded-[10px] px-3 py-2 text-[#252525] text-sm font-poppins placeholder:text-[#252525]/40 focus:outline-none focus:border-[#556117] ${errors.username ? 'border-red-500' : 'border-[#252525]'}`}
         />
-        {errors.username && <span className="text-xs text-red-500 font-poppins">Nama lengkap wajib diisi</span>}
+        {errors.username && <span className="text-xs text-red-500 font-poppins">Username wajib diisi</span>}
       </div>
 
       {/* Email */}
@@ -112,7 +122,7 @@ export default function RegisterForm({
         <div className="relative">
           <input
             type={showPass ? 'text' : 'password'}
-            placeholder="Kata Sandi?"
+            placeholder="Masukkan kata sandi"
             value={password}
             onChange={(e) => { onPasswordChange(e.target.value); setErrors(p => ({ ...p, password: false })) }}
             className={`border-2 rounded-[10px] px-3 py-2 text-[#252525] text-sm font-poppins w-full placeholder:text-[#252525]/40 focus:outline-none focus:border-[#556117] ${errors.password ? 'border-red-500' : 'border-[#252525]'}`}
@@ -128,12 +138,12 @@ export default function RegisterForm({
       <div className="flex flex-col gap-1">
         <input
           type="tel"
-          placeholder="Masukkan No. Telepon"
-          value={phone}
-          onChange={(e) => { onPhoneChange(e.target.value); setErrors(p => ({ ...p, phone: false })) }}
-          className={`border-2 rounded-[10px] px-3 py-2 text-[#252525] text-sm font-poppins placeholder:text-[#252525]/40 focus:outline-none focus:border-[#556117] ${errors.phone ? 'border-red-500' : 'border-[#252525]'}`}
+          placeholder="Masukkan Nomor Telepon"
+          value={phone_number}
+          onChange={(e) => { onPhoneNumberChange(e.target.value); setErrors(p => ({ ...p, phone_number: false })) }}
+          className={`border-2 rounded-[10px] px-3 py-2 text-[#252525] text-sm font-poppins placeholder:text-[#252525]/40 focus:outline-none focus:border-[#556117] ${errors.phone_number ? 'border-red-500' : 'border-[#252525]'}`}
         />
-        {errors.phone && <span className="text-xs text-red-500 font-poppins">No. telepon wajib diisi</span>}
+        {errors.phone_number && <span className="text-xs text-red-500 font-poppins">Nomor telepon wajib diisi</span>}
       </div>
 
       <button

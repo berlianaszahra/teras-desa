@@ -3,22 +3,17 @@
 import { useState } from "react"
 
 interface LoginFormProps {
-  username: string
+  email: string
   password: string
-  onUsernameChange: (v: string) => void
+  onEmailChange: (v: string) => void
   onPasswordChange: (v: string) => void
   onSubmit: (e: React.FormEvent) => void
   onGoogleLogin: () => void
 }
 
 function GoogleIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 48 48">
-      <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.2l6.7-6.7C35.7 2.2 30.2 0 24 0 14.7 0 6.7 5.4 2.8 13.3l7.8 6C12.5 13 17.8 9.5 24 9.5z" />
-      <path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17z" />
-      <path fill="#FBBC05" d="M10.6 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6A24 24 0 0 0 0 24c0 3.9.9 7.5 2.5 10.8l8.1-6.1z" />
-      <path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.5l-7.5-5.8c-2 1.4-4.6 2.3-7.7 2.3-6.2 0-11.5-4.2-13.4-9.8l-8.1 6.1C6.6 42.6 14.7 48 24 48z" />
-    </svg>
+    return (
+    < img src="/images/google2.png" alt="Logo Google" className="w-4 h-4" />
   )
 }
 
@@ -36,18 +31,18 @@ function EyeIcon({ open }: { open: boolean }) {
 }
 
 export default function LoginForm({
-  username, password,
-  onUsernameChange, onPasswordChange,
+  email, password,
+  onEmailChange, onPasswordChange,
   onSubmit, onGoogleLogin,
 }: LoginFormProps) {
   const [showPass, setShowPass] = useState(false)
-  const [errors, setErrors] = useState({ username: false, password: false })
+  const [errors, setErrors] = useState({ email: false, password: false })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const newErrors = { username: !username, password: !password }
+    const newErrors = { email: !email, password: !password }
     setErrors(newErrors)
-    if (newErrors.username || newErrors.password) return
+    if (newErrors.email || newErrors.password) return
     onSubmit(e)
   }
 
@@ -74,16 +69,16 @@ export default function LoginForm({
         <div className="flex-1 h-px bg-[#252525]/20" />
       </div>
 
-      {/* Username */}
+      {/* Email */}
       <div className="flex flex-col gap-1">
         <input
           type="text"
-          placeholder="Nama Pengguna?"
-          value={username}
-          onChange={(e) => { onUsernameChange(e.target.value); setErrors(p => ({ ...p, username: false })) }}
-          className={`border-2 rounded-[10px] px-3 py-2 text-[#252525] text-sm font-poppins placeholder:text-[#252525]/40 focus:outline-none focus:border-[#556117] ${errors.username ? 'border-red-500' : 'border-[#252525]'}`}
+          placeholder="Masukkan Email"
+          value={email}
+          onChange={(e) => { onEmailChange(e.target.value); setErrors(p => ({ ...p, email: false })) }}
+          className={`border-2 rounded-[10px] px-3 py-2 text-[#252525] text-sm font-poppins placeholder:text-[#252525]/40 focus:outline-none focus:border-[#556117] ${errors.email ? 'border-red-500' : 'border-[#252525]'}`}
         />
-        {errors.username && <span className="text-xs text-red-500 font-poppins">Nama pengguna wajib diisi</span>}
+        {errors.email && <span className="text-xs text-red-500 font-poppins">Email wajib diisi</span>}
       </div>
 
       {/* Password */}
@@ -91,7 +86,7 @@ export default function LoginForm({
         <div className="relative">
           <input
             type={showPass ? 'text' : 'password'}
-            placeholder="Kata Sandi?"
+            placeholder="Masukkan Kata Sandi"
             value={password}
             onChange={(e) => { onPasswordChange(e.target.value); setErrors(p => ({ ...p, password: false })) }}
             className={`border-2 rounded-[10px] px-3 py-2 text-[#252525] text-sm font-poppins w-full placeholder:text-[#252525]/40 focus:outline-none focus:border-[#556117] ${errors.password ? 'border-red-500' : 'border-[#252525]'}`}

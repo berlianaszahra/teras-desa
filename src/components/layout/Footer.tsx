@@ -27,10 +27,10 @@ export default function Footer() {
 
           {/* Social */}
           <div className="flex gap-4 text-lg md:text-xl">
-            <span className="cursor-pointer hover:opacity-70">𝕏</span>
-            <span className="cursor-pointer hover:opacity-70">📸</span>
-            <span className="cursor-pointer hover:opacity-70">▶</span>
-            <span className="cursor-pointer hover:opacity-70">in</span>
+            <span className="cursor-pointer hover:opacity-70 "><img src="/images/twitter.png" alt="Twitter" className="w-6 h-6 object-contain" /></span>
+            <span className="cursor-pointer hover:opacity-70"><img src="/images/instagram.png" alt="Instagram" className="w-6 h-6 object-contain" /></span>
+            <span className="cursor-pointer hover:opacity-70"><img src="/images/youtube.png" alt="YouTube" className="w-6 h-6 object-contain" /></span>
+            <span className="cursor-pointer hover:opacity-70"><img src="/images/linkedin.png" alt="LinkedIn" className="w-6 h-6 object-contain" /></span>
           </div>
         </div>
 

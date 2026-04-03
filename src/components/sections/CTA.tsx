@@ -51,7 +51,7 @@ export function CTA() {
         </p>
 
         <div className="mt-2 sm:mt-4">
-          <Link href="/jelajah-desa">
+          <Link href="/users/jelajah-desa">
             <Button>
               Jelajah Desa
             </Button>

@@ -16,7 +16,6 @@ export default function DetailReportModal({ reportId, onClose }: DetailReportMod
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setLoading(true);
     getReportById(reportId)
       .then((res) => setData(res.data))
       .catch((err) => setError(err.message || "Gagal memuat detail laporan"))

@@ -14,10 +14,12 @@ export default function LoginContainer({ mode, children }: LoginContainerProps) 
       className="min-h-screen w-full flex flex-col bg-cover bg-center"
       style={{ backgroundImage: "url('/images/bg.webp')" }}
     >
-      {/* Logo */}
-      <div className="flex items-center gap-2 p-6">
-        <Image src="/images/logo-tr.webp" alt="TerasDesa" width={50} height={50} />
-        <span className="text-black font-bold text-xl font-poppins">TerasDesa</span>
+      {/* Logo dan text buat kembali ke landing page*/}
+      <div className="flex items-center gap-2 p-4">
+        <Link href="/landing-page" className='flex items-center gap-2'>
+          <Image src="/images/logo-tr.webp" alt="TerasDesa" width={60} height={60} />
+          <span className=" text-black font-bold text-xl font-poppins">TerasDesa</span>
+        </Link>
       </div>
 
       {/* Card */}

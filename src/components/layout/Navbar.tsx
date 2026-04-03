@@ -28,11 +28,13 @@ export default function Navbar() {
 
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img
-            src="/images/logo-tr.webp"
-            alt="logo navbar"
-            className="w-10 h-10 md:w-14 md:h-14 object-contain"
-          />
+          <Link href="/landing-page">
+            <img
+              src="/images/logo-tr.webp"
+              alt="logo navbar"
+              className="w-10 h-10 md:w-14 md:h-14 object-contain"
+            />
+          </Link>
           <span className="text-black font-bold text-lg md:text-xl">
             TerasDesa
           </span>

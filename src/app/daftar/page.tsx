@@ -36,17 +36,14 @@ export default function RegisterPage() {
 
   const handleGoogleRegister = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
+      setError('')
       try {
         const res = await api.post('/users/oauth/google', {
-          idToken: tokenResponse.access_token,
+          idToken: tokenResponse.access_token, // ← backend kamu terima apa? sesuaikan di sini
         })
         localStorage.setItem('token', res.data.data.token)
         const user = await getCurrentUser()
-        if (user.role === 'admin') {
-          router.push('/admin/dashboard')
-        } else {
-          router.push('/dashboard')
-        }
+        router.push(user.role === 'admin' ? '/admin/dashboard' : '/dashboard')
       } catch (err) {
         const error = err as { response?: { data?: { message?: string } } }
         setError(error.response?.data?.message || 'Daftar Google gagal')

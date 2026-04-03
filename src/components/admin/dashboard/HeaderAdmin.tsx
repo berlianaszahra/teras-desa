@@ -23,8 +23,8 @@ export default function HeaderAdmin() {
         </Link>
 
         {/* Avatar */}
-        <div className="w-[45px] h-[45px] md:w-[50px] md:h-[50px] rounded-full bg-[#556117] flex items-center justify-center">
-          <span className="text-white font-bold text-2xl">A</span>
+        <div className="w-[50px] h-[50px] md:w-[50px] md:h-[50px] rounded-full bg-[#556117] flex items-center justify-center">
+          <span className="text-white font-bold text-3xl">A</span>
         </div>
       </div>
     </header>

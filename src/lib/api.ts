@@ -66,11 +66,10 @@ export async function login(body: {
   })
 }
 
-
-
 export async function loginWithGoogle(idToken: string) {
   return request<{ data: { token: string } }>('/api/users/oauth/google', {
     method: 'POST',
     body: JSON.stringify({ idToken }),
   })
 }
+ 

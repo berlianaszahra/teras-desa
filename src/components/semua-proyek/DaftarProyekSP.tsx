@@ -1,33 +1,72 @@
-import ProyekCardSP from "./ProyekCardSP";
+'use client'
 
-const projects = [
-  { id: 1, title: "Pembangunan Jalan", status: "Selesai", anggaran: "Rp. 120.000.000", progress: 100, image: "/images/renovasi jalan.webp"},
-  { id: 2, title: "Renovasi Balai Desa", status: "Diproses", anggaran: "Rp. 85.000.000", progress: 65, image: "/images/balai desa.webp"},
-  { id: 3, title: "Perbaikan Jembatan", status: "Diproses", anggaran: "Rp. 95.000.000", progress: 55, image: "/images/jembatan.webp"},
-  { id: 4, title: "Pembangunan Drainase", status: "Diproses", anggaran: "Rp. 70.000.000", progress: 45, image: "/images/drainase.webp"},
-  { id: 5, title: "Perbaikan Jalan Tani", status: "Diproses", anggaran: "Rp. 60.000.000", progress: 50, image: "/images/jalan tani.webp"},
-  { id: 6, title: "Pembangunan Posyandu", status: "Diproses", anggaran: "Rp. 75.000.000", progress: 35, image: "/images/posyandu.webp"},
-  { id: 7, title: "Perbaikan Irigasi Sawah", status: "Diproses", anggaran: "Rp. 110.000.000", progress: 45, image: "/images/irigasi.webp"},
-  { id: 8, title: "Pembangunan Taman", status: "Diterima", anggaran: "Rp. 70.000.000", progress: 10, image: "/images/taman.webp"},
-  { id: 9, title: "Perbaikan Masjid", status: "Diproses", anggaran: "Rp. 95.000.000", progress: 55, image: "/images/masjid.webp"},
-  { id: 10, title: "Renovasi Mushola", status: "Diproses", anggaran: "Rp. 45.000.000", progress: 20, image: "/images/mushola.webp"},
-  { id: 11, title: "Pembangunan Sumur Bor", status: "Diproses", anggaran: "Rp. 55.000.000", progress: 25, image: "/images/sumur.webp"},
-  { id: 12, title: "Perbaikan Perairan", status: "Diproses", anggaran: "Rp. 95.000.000", progress: 55, image: "/images/perairan.webp"},
-];
+import { useEffect, useState } from 'react'
+import { getProjects } from '@/lib/axios'
+import ProyekCardSP from './ProyekCardSP'
 
-export default function DaftarProyekSP() {
+interface Project {
+  id: string
+  title: string
+  status: string
+  totalBudget: string
+  progress: number
+  location: string
+}
+
+interface DaftarProyekSPProps {
+  search?: string
+  tahun?: string
+}
+
+const statusLabel: Record<string, string> = {
+  perencanaan: 'Perencanaan',
+  berjalan: 'Berjalan',
+  selesai: 'Selesai',
+}
+
+const imageMap: Record<string, string> = {
+  'Pembangunan Jalan': '/images/renovasi jalan.webp',
+  'Renovasi Balai Desa': '/images/balai desa.webp',
+  'Perbaikan Jembatan': '/images/jembatan.webp',
+  'Pembangunan Drainase': '/images/drainase.webp',
+  'Perbaikan Jalan Tani': '/images/jalan tani.webp',
+  'Pembangunan Posyandu': '/images/posyandu.webp',
+  'Perbaikan Irigasi Sawah': '/images/irigasi.webp',
+  'Pembangunan Taman': '/images/taman.webp',
+  'Perbaikan Masjid': '/images/masjid.webp',
+  'Renovasi Mushola': '/images/mushola.webp',
+  'Pembangunan Sumur Bor': '/images/sumur.webp',
+  'Perbaikan Perairan': '/images/perairan.webp',
+}
+
+export default function DaftarProyekSP({ search, tahun }: DaftarProyekSPProps) {
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+  getProjects({ search, tahun })
+    .then((data) => {
+      setProjects(data.items)
+    })
+    .catch(() => {})
+    .finally(() => setLoading(false))
+}, [search, tahun])
+
+  if (loading) return <p className="text-center py-10 font-poppins">Loading...</p>
+
   return (
-    <section className="px-4 md:px-12 lg:px-[122px] grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+    <section className="px-4 md:px-12 lg:px-[122px] grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
       {projects.map((p) => (
         <ProyekCardSP
           key={p.id}
+          id={p.id}
           title={p.title}
-          status={p.status}
-          anggaran={p.anggaran}
+          status={statusLabel[p.status] || p.status}
+          anggaran={`Rp. ${Number(p.totalBudget).toLocaleString('id-ID')}`}
           progress={p.progress}
-          image={p.image}
+          image={imageMap[p.title] || '/images/default-project.jpg'}
         />
       ))}
     </section>
-  );
+  )
 }

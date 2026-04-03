@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface ProyekCardSPProps {
+  id: string;
   title: string;
   status: string;
   anggaran: string;
@@ -12,6 +13,7 @@ interface ProyekCardSPProps {
 }
 
 export default function ProyekCardSP({
+  id,
   title,
   status,
   anggaran,
@@ -19,7 +21,7 @@ export default function ProyekCardSP({
   image,
 }: ProyekCardSPProps) {
   return (
-    <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-6 p-4 md:p-6 bg-[#E6E5D9] rounded-2xl md:rounded-[32px] shadow-md w-full">
+    <div className="flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-6 p-4 md:p-6 bg-[#E6E5D9] rounded-2xl md:rounded-[32px] shadow-md w-full">
       
       {/* Thumbnail */}
       <div className="relative w-full h-[200px] md:w-[200px] md:h-[200px] lg:w-[220px] lg:h-[220px] flex-shrink-0 rounded-xl md:rounded-2xl overflow-hidden">
@@ -40,7 +42,7 @@ export default function ProyekCardSP({
         </h3>
 
         {/* Status */}
-        <span className="inline-flex w-fit items-center justify-center px-4 md:px-6 py-1 rounded-lg md:rounded-xl bg-[#C3C9B5] text-[#2F3E0C] text-xs md:text-sm font-semibold">
+        <span className="inline-flex w-fit items-center justify-center px-4 md:px-3 py-1 rounded-lg md:rounded-xl bg-[#C3C9B5] text-[#2F3E0C] text-xs md:text-sm font-semibold">
           {status}
         </span>
 
@@ -67,7 +69,7 @@ export default function ProyekCardSP({
         </div>
 
         {/* Button */}
-        <Link href="/detail-proyek">
+        <Link href={`/detail-proyek/${id}`}>
           <button className="w-full flex items-center justify-center py-2 md:py-3 bg-[#2F3E0C] rounded-lg md:rounded-xl hover:bg-[#3d5010] transition-colors">
             <span className="text-sm md:text-lg font-semibold text-[#E2E5DB]">
               Lihat Detail

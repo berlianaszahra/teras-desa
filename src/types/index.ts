@@ -210,3 +210,10 @@ export interface AddCommentPayload {
   comment: string;
   is_anonymous: boolean;
 }
+
+export interface UpdateProfilePayload {
+  name?: string;
+  username?: string;
+  email?: string;
+  phone_number?: string;
+}

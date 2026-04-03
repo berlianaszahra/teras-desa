@@ -19,6 +19,7 @@ import type {
   ReportStatus,
   DashboardStats,
   ReportsPieData,
+  UpdateProfilePayload,
 } from '@/types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? '';
@@ -114,6 +115,16 @@ export async function updateProfilePicture(imageFile: File): Promise<ApiResponse
     body: formData,
   });
   return handleResponse<ApiResponse<{ profilePictureUrl: string }>>(res);
+}
+
+// Memperbarui informasi profil pengguna (nama, username, email, phone).
+export async function updateProfile(payload: UpdateProfilePayload): Promise<ApiResponse<User>> {
+  const res = await fetch(`${BASE_URL}/users`, {
+    method: 'PATCH',
+    headers: buildHeaders(true),
+    body: JSON.stringify(payload),
+  });
+  return handleResponse<ApiResponse<User>>(res);
 }
 
 // Proyek

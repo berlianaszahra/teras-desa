@@ -87,7 +87,7 @@ export default function UploadProyekForm() {
         <div className="bg-[#E6E5D9] border border-[#3F5210] shadow-[0px_0px_50px_rgba(0,0,0,0.25)] rounded-[30px] md:rounded-[50px] px-6 md:px-14 py-10 md:py-14 flex flex-col gap-10">
 
           <div className="w-full bg-gradient-to-r from-[#A64A0D] to-[#401D05] rounded-[20px] md:rounded-[35px] py-5 flex items-center justify-center">
-            <h2 className="text-[#3F5210] font-semibold text-xl md:text-[36px] tracking-wide">
+            <h2 className="text-white font-semibold text-xl md:text-[36px] tracking-wide">
               Tambah Proyek Desa
             </h2>
           </div>

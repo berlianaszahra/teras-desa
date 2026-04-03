@@ -1,44 +1,70 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from 'react';
+import { getReportsPie, REPORT_STATUS_LABEL } from '@/lib/api';
+import type { ReportPieBreakdown } from '@/types';
 
 const filterTabs = ["Semua", "Diterima", "Diproses", "Selesai"];
 
-const pieSegments = [
-  { label: "Diproses", persen: 50, warna: "#9F490E" },
-  { label: "Diterima", persen: 25, warna: "#E3AB55" },
-  { label: "Selesai", persen: 25, warna: "#3F5210" },
-];
+const STATUS_COLORS: Record<string, string> = {
+  diproses: '#9F490E',
+  diterima: '#E3AB55',
+  selesai:  '#3F5210',
+};
 
-function PieChart() {
-  const stops = pieSegments.reduce((acc, s, i) => {
-    const start = pieSegments.slice(0, i).reduce((sum, seg) => sum + seg.persen, 0);
-    const cum = start + s.persen;
-    acc.push(`${s.warna} ${start}% ${cum}%`);
-    return acc;
-  }, [] as string[]);
+function PieChart({ segments }: { segments: ReportPieBreakdown[] }) {
+  const stops: string[] = [];
+  let cumulative = 0;
+
+  segments.forEach((s) => {
+    const color = STATUS_COLORS[s.status] ?? '#999';
+    stops.push(`${color} ${cumulative}% ${cumulative + s.percentage}%`);
+    cumulative += s.percentage;
+  });
+
+  // Jika tidak ada data, tampilkan placeholder kosong
+  if (stops.length === 0) {
+    return (
+      <div className="w-[120px] md:w-[142px] h-[120px] md:h-[142px] rounded-full bg-[#C3C9B5]" />
+    );
+  }
 
   return (
     <div
       className="w-[120px] md:w-[142px] h-[120px] md:h-[142px] rounded-full"
-      style={{ background: `conic-gradient(${stops.join(", ")})` }}
+      style={{ background: `conic-gradient(${stops.join(', ')})` }}
     />
   );
 }
 
 export default function FilterChartAdmin() {
   const [active, setActive] = useState("Semua");
+  const [segments, setSegments] = useState<ReportPieBreakdown[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getReportsPie()
+      .then((res) => setSegments(res.data.breakdown))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <div className="w-full bg-[#E6E5D9] rounded-[15px] px-4 md:px-6 py-5 flex flex-col md:flex-row gap-6">
       
-      <PieChart />
+      {loading ? (
+        <div className="w-[120px] md:w-[142px] h-[120px] md:h-[142px] rounded-full bg-[#C3C9B5] animate-pulse" />
+      ) : (
+        <PieChart segments={segments} />
+      )}
 
       <div className="flex flex-wrap md:flex-nowrap gap-4">
-        {pieSegments.map((s) => (
-          <div key={s.label} className="flex items-center gap-2">
-            <div className="w-4 h-4 rounded-full" style={{ background: s.warna }} />
-            <span className="text-sm md:text-base">{s.label}</span>
+        {segments.map((s) => (
+          <div key={s.status} className="flex items-center gap-2">
+            <div className="w-4 h-4 rounded-full" style={{ background: STATUS_COLORS[s.status] ?? '#999' }} />
+            <span className="text-sm md:text-base">
+              {REPORT_STATUS_LABEL[s.status] ?? s.status} ({s.count})
+            </span>
           </div>
         ))}
       </div>
@@ -50,7 +76,7 @@ export default function FilterChartAdmin() {
         </span>
 
         <div className="flex overflow-x-auto">
-          {filterTabs.map((tab, i) => (
+          {filterTabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActive(tab)}

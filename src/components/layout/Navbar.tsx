@@ -34,10 +34,12 @@ export default function Navbar() {
               alt="logo navbar"
               className="w-10 h-10 md:w-14 md:h-14 object-contain"
             />
-          </Link>
+            </Link>
+          <Link href="/landing-page">
           <span className="text-black font-bold text-lg md:text-xl">
             TerasDesa
           </span>
+          </Link>
         </div>
 
         {/* DESKTOP MENU */}

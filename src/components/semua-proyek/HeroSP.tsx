@@ -1,4 +1,19 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { getDashboardStats, formatRupiah } from '@/lib/api';
+
 export default function HeroSP() {
+  const [totalBudget, setTotalBudget] = useState<string | number>('0');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getDashboardStats()
+      .then((res) => setTotalBudget(res.data.total_budget))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section className="px-4 md:px-12 lg:px-[122px] pt-28 md:pt-40 lg:pt-[237px] flex flex-col gap-6 md:gap-10">
       <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-[64px] font-bold text-[#252525] leading-tight md:leading-[131.8%]">
@@ -17,7 +32,7 @@ export default function HeroSP() {
         </p>
 
         <p className="text-2xl sm:text-3xl md:text-5xl lg:text-[64px] font-semibold text-white leading-tight md:leading-[131.8%]">
-          Rp 1.314.800.000
+          {loading ? '...' : formatRupiah(totalBudget)}
         </p>
       </div>
     </section>

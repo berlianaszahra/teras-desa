@@ -7,13 +7,13 @@ export default function HeaderAdmin() {
         <div className="w-8 md:w-10 h-8 md:h-10 relative">
           <Image src="/images/logo-tr.webp" alt="TerasDesa" fill className="object-contain" />
         </div>
-        <span className="text-base md:text-xl font-bold text-[#3F5210] font-poppins">
+        <span className="text-base md:text-xl font-bold text-[#3F5210] gid font-poppins">
           TerasDesa
         </span>
       </div>
 
       <div className="flex items-center">
-        <span className="text-lg md:text-2xl font-bold text-[#ECEEE7] font-poppins">
+        <span className="text-lg md:text-2xl font-bold text-[#3F5210] font-poppins">
           Admin
         </span>
       </div>

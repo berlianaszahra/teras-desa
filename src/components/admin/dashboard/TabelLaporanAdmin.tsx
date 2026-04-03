@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { getReports, updateReportStatus, REPORT_STATUS_LABEL } from "@/lib/api";
 import type { ReportListItem, ReportStatus } from "@/types";
+import DetailReportModal from "./DetailReportModal";
  
 const statusOptions: ReportStatus[] = ["diproses", "diterima", "selesai"];
  
@@ -62,6 +63,10 @@ export default function TabelLaporanAdmin({ status }: { status: string }) {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
+  // Detail Modal State
+  const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+
   const limit = 10;
 
   useEffect(() => {
@@ -81,6 +86,16 @@ export default function TabelLaporanAdmin({ status }: { status: string }) {
     setPage(p);
   };
 
+  const handleOpenDetail = (id: string) => {
+    setSelectedReportId(id);
+    setIsDetailOpen(true);
+  };
+
+  const handleCloseDetail = () => {
+    setIsDetailOpen(false);
+    setSelectedReportId(null);
+  };
+
   async function updateStatus(id: string, newStatus: ReportStatus) {
     try {
       await updateReportStatus(id, newStatus);
@@ -95,101 +110,129 @@ export default function TabelLaporanAdmin({ status }: { status: string }) {
   const columns = ["ID", "Judul", "Kategori", "Tanggal Laporan", "Lokasi", "Status", "Aksi"];
 
   return (
-    <div className="w-full bg-[#E6E5D9] rounded-[35px] p-8 md:p-10 flex flex-col gap-10 shadow-sm">
-      <h2 className="text-[36px] font-bold text-[#190B02] font-poppins">
-        Daftar Laporan Warga
-      </h2>
+    <>
+      <div className="w-full bg-[#E6E5D9] rounded-[35px] p-8 md:p-10 flex flex-col gap-10 shadow-sm relative">
+        <h2 className="text-[36px] font-bold text-[#190B02] font-poppins">
+          Daftar Laporan Warga
+        </h2>
 
-      <div className="w-full overflow-x-auto">
-        <div className="min-w-[1100px] rounded-[25px] overflow-hidden border border-[#3F5210]/10">
-          <div className="flex flex-row bg-[#3F5210] text-[#FDF5E3] font-poppins h-[70px]">
-            {columns.map((col) => (
-              <div
-                key={col}
-                className={`flex items-center px-6 py-5 text-xl font-bold border-r border-[#ECEEE7]/10 last:border-0
-                  ${col === "ID"               ? "w-[120px] justify-center" : ""}
-                  ${col === "Judul"            ? "flex-[1.5]" : ""}
-                  ${col === "Kategori"         ? "w-[200px]" : ""}
-                  ${col === "Tanggal Laporan"  ? "w-[220px]" : ""}
-                  ${col === "Lokasi"           ? "flex-1" : ""}
-                  ${col === "Status"           ? "w-[200px] justify-center" : ""}
-                  ${col === "Aksi"             ? "w-[140px] justify-center" : ""}
-                `}
-              >
-                {col}
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-[#FDF5E3]">
-            {loading ? (
-              <div className="p-24 text-center text-2xl font-poppins font-bold text-[#3F5210]">Memuat laporan...</div>
-            ) : data.length === 0 ? (
-              <div className="p-24 text-center text-2xl font-poppins font-bold text-[#3F5210]">Tidak ada laporan ditemukan</div>
-            ) : (
-              data.map((row, index) => (
-                <div key={row.id} className="flex flex-row border-b border-[#3F5210]/10 last:border-0 hover:bg-[#F2EEDA] transition-colors font-poppins min-h-[90px]">
-                  <div className="w-[120px] flex items-center justify-center px-6 py-4 text-xl font-bold text-[#5E5151]">
-                    #{String(index + 1).padStart(3, '0')}
-                  </div>
-                  <div className="flex-[1.5] flex items-center px-6 py-4 text-xl font-bold text-[#190B02]">
-                    {row.title}
-                  </div>
-                  <div className="w-[200px] flex items-center px-6 py-4 text-xl font-bold text-[#5E5151]">
-                    Infrastruktur
-                  </div>
-                  <div className="w-[220px] flex items-center px-6 py-4 text-xl font-medium text-[#5E5151]">
-                    {new Date(row.createdAt).toLocaleDateString('id-ID', {
-                      day: 'numeric', month: 'long', year: 'numeric'
-                    })}
-                  </div>
-                  <div className="flex-1 flex items-center px-6 py-4 text-xl font-medium text-[#5E5151]">
-                    {row.location}
-                  </div>
-                  <div className="w-[200px] flex items-center justify-center px-6 py-4">
-                    <StatusDropdown
-                      value={row.status}
-                      onChange={(v) => updateStatus(row.id, v)}
-                    />
-                  </div>
-                  <div className="w-[140px] flex items-center justify-center px-6 py-4">
-                    <button className="px-8 py-2.5 bg-[#999999] rounded-2xl text-xl font-bold text-[#190B02] hover:bg-[#888] transition-colors">
-                      Detail
-                    </button>
-                  </div>
+        <div className="w-full overflow-x-auto">
+          <div className="min-w-[1100px] rounded-[25px] overflow-hidden border border-[#3F5210]/10">
+            <div className="flex flex-row bg-[#3F5210] text-[#FDF5E3] font-poppins h-[70px]">
+              {columns.map((col) => (
+                <div
+                  key={col}
+                  className={`flex items-center px-6 py-5 text-xl font-bold border-r border-[#ECEEE7]/10 last:border-0
+                    ${col === "ID"               ? "w-[120px] justify-center" : ""}
+                    ${col === "Judul"            ? "flex-[1.5]" : ""}
+                    ${col === "Kategori"         ? "w-[200px]" : ""}
+                    ${col === "Tanggal Laporan"  ? "w-[220px]" : ""}
+                    ${col === "Lokasi"           ? "flex-1" : ""}
+                    ${col === "Status"           ? "w-[200px] justify-center" : ""}
+                    ${col === "Aksi"             ? "w-[140px] justify-center" : ""}
+                  `}
+                >
+                  {col}
                 </div>
-              ))
-            )}
+              ))}
+            </div>
+
+            <div className="bg-[#FDF5E3]">
+              {loading ? (
+                <div className="p-24 text-center text-2xl font-poppins font-bold text-[#3F5210]">Memuat laporan...</div>
+              ) : data.length === 0 ? (
+                <div className="p-24 text-center text-2xl font-poppins font-bold text-[#3F5210]">Tidak ada laporan ditemukan</div>
+              ) : (
+                data.map((row, index) => (
+                  <div key={row.id} className="flex flex-row border-b border-[#3F5210]/10 last:border-0 hover:bg-[#F2EEDA] transition-colors font-poppins min-h-[90px]">
+                    <div className="w-[120px] flex items-center justify-center px-6 py-4 text-xl font-bold text-[#5E5151]">
+                      #{String(index + 1).padStart(3, '0')}
+                    </div>
+                    <div className="flex-[1.5] flex items-center px-6 py-4 text-xl font-bold text-[#190B02]">
+                      {row.title}
+                    </div>
+                    <div className="w-[200px] flex items-center px-6 py-4 text-xl font-bold text-[#5E5151]">
+                      Infrastruktur
+                    </div>
+                    <div className="w-[220px] flex items-center px-6 py-4 text-xl font-medium text-[#5E5151]">
+                      {new Date(row.createdAt).toLocaleDateString('id-ID', {
+                        day: 'numeric', month: 'long', year: 'numeric'
+                      })}
+                    </div>
+                    <div className="flex-1 flex items-center px-6 py-4 text-xl font-medium text-[#5E5151]">
+                      {row.location}
+                    </div>
+                    <div className="w-[200px] flex items-center justify-center px-6 py-4">
+                      <StatusDropdown
+                        value={row.status}
+                        onChange={(v) => updateStatus(row.id, v)}
+                      />
+                    </div>
+                    <div className="w-[140px] flex items-center justify-center px-6 py-4">
+                      <button 
+                        onClick={() => handleOpenDetail(row.id)}
+                        className="px-8 py-2.5 bg-[#5D6B1D] rounded-2xl text-xl font-bold text-white hover:bg-[#4D5B1A] transition-colors shadow-sm"
+                      >
+                        Detail
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
+
+        {!loading && total > 0 && (
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 mt-4">
+            <span className="text-[28px] font-bold text-[#190B02] font-poppins">
+              Menampilkan {data.length} dari {total} Laporan
+            </span>
+
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => handlePageChange(Math.max(1, page - 1))}
+                disabled={page === 1}
+                className="w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] disabled:opacity-50"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i + 1}
+                  onClick={() => handlePageChange(i + 1)}
+                  className={`w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] font-bold text-2xl transition-all
+                    ${page === i + 1 ? "bg-[#3F5210] text-[#FDF5E3]" : "bg-[#ECEEE7] text-[#3F5210] hover:bg-white shadow-sm"}
+                  `}
+                >
+                  {i + 1}
+                </button>
+              ))}
+              
+              <button 
+                onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
+                disabled={page === totalPages}
+                className="w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] disabled:opacity-50"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
-      {!loading && total > 0 && (
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 mt-4">
-          <span className="text-[28px] font-bold text-[#190B02] font-poppins">
-            Menampilkan {data.length} dari {total} Laporan
-          </span>
-
-          <div className="flex gap-4">
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <button
-                key={i + 1}
-                onClick={() => handlePageChange(i + 1)}
-                className={`w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] font-bold text-2xl transition-all
-                  ${page === i + 1 ? "bg-[#3F5210] text-[#FDF5E3]" : "bg-[#ECEEE7] text-[#3F5210] hover:bg-white shadow-sm"}
-                `}
-              >
-                {i + 1}
-              </button>
-            ))}
-            <button className="w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] hover:bg-white shadow-sm">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-          </div>
-        </div>
+      {/* Modal Detail Laporan */}
+      {isDetailOpen && selectedReportId && (
+        <DetailReportModal 
+          reportId={selectedReportId} 
+          onClose={handleCloseDetail} 
+        />
       )}
-    </div>
+    </>
   );
 }

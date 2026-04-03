@@ -130,10 +130,29 @@ export async function updateProfile(payload: UpdateProfilePayload): Promise<ApiR
 // Proyek
 
 export async function createProject(payload: CreateProjectPayload): Promise<ApiResponse<ProjectDetail>> {
+  const formData = new FormData();
+  formData.append('title', payload.title);
+  formData.append('description', payload.description);
+  formData.append('location', payload.location);
+  formData.append('total_budget', String(payload.total_budget));
+  formData.append('start_date', payload.start_date);
+  formData.append('end_date', payload.end_date);
+  formData.append('status', payload.status);
+
+  if (payload.timeline) {
+    formData.append('timeline', JSON.stringify(payload.timeline));
+  }
+  if (payload.expenses) {
+    formData.append('expenses', JSON.stringify(payload.expenses));
+  }
+  if (payload.images && payload.images.length > 0) {
+    payload.images.forEach((file) => formData.append('images', file));
+  }
+
   const res = await fetch(`${BASE_URL}/projects`, {
     method: 'POST',
-    headers: buildHeaders(true),
-    body: JSON.stringify(payload),
+    headers: buildHeaders(true, true),
+    body: formData,
   });
   return handleResponse<ApiResponse<ProjectDetail>>(res);
 }

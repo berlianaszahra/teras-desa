@@ -125,6 +125,7 @@ export interface CreateProjectPayload {
   status: ProjectStatus | string;
   timeline?: TimelinePayload[];
   expenses?: ExpensePayload[];
+  images?: File[];
 }
 
 export interface ProjectListParams {

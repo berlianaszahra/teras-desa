@@ -1,13 +1,16 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import SidebarAdmin from '@/components/admin/dashboard/SidebarAdmin';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, loading, isAuthenticated, isAdmin } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+
+  const isProfilePage = pathname === '/admin/profil';
 
   useEffect(() => {
     if (loading) return;
@@ -37,10 +40,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="flex min-h-screen bg-[#F5F1E9] font-poppins text-[#190B02] selection:bg-[#3F5210] selection:text-white">
-      <div className="flex-shrink-0">
-        <SidebarAdmin />
-      </div>
-      <main className="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden">
+      {!isProfilePage && (
+        <div className="flex-shrink-0">
+          <SidebarAdmin />
+        </div>
+      )}
+      <main className={`flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden ${isProfilePage ? 'p-0' : ''}`}>
         {children}
       </main>
     </div>

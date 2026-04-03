@@ -21,7 +21,7 @@ export default function LaporanJD() {
         Laporan Terbaru
       </h2>
 
-      {/* ✅ DESKTOP TABLE */}
+      {/* DESKTOP TABLE */}
       <div className="hidden md:block w-full overflow-x-auto">
         <table className="w-full">
           <thead>
@@ -51,7 +51,7 @@ export default function LaporanJD() {
         </table>
       </div>
 
-      {/* ✅ MOBILE CARD */}
+      {/*  MOBILE CARD */}
       <div className="flex flex-col gap-3 md:hidden">
         {reports.map((r) => (
           <div

@@ -69,7 +69,7 @@ export default function ProyekCardSP({
         </div>
 
         {/* Button */}
-        <Link href={`/detail-proyek/${id}`}>
+        <Link href={`/users/detail-proyek/${id}`}>
           <button className="w-full flex items-center justify-center py-2 md:py-3 bg-[#2F3E0C] rounded-lg md:rounded-xl hover:bg-[#3d5010] transition-colors">
             <span className="text-sm md:text-lg font-semibold text-[#E2E5DB]">
               Lihat Detail

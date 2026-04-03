@@ -30,7 +30,7 @@ export default function CTAJD() {
           </div>
 
           <Link
-            href="/buat-laporan"
+            href="/users/buat-laporan"
             className="flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-[#556117] rounded-xl md:rounded-2xl hover:bg-[#3f4a12] transition"
           >
             <span className="text-sm md:text-lg lg:text-2xl font-semibold text-white">

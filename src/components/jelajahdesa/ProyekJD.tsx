@@ -48,7 +48,7 @@ export default function ProyekJD() {
         </h2>
 
         <Link
-          href="/semua-proyek"
+          href="/users/semua-proyek"
           className="text-sm md:text-lg font-medium text-[#3F5210] hover:underline"
         >
           Lihat Semua Proyek

@@ -63,7 +63,7 @@ export default function HeroSection() {
         </p>
 
         <div className="mt-3 sm:mt-4 md:mt-6">
-          <Link href="/jelajah-desa">
+          <Link href="/users/jelajah-desa">
             <Button>
               Jelajahi Desa
             </Button>

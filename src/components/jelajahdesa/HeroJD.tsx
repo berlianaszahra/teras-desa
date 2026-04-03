@@ -1,4 +1,21 @@
-export default function Hero() {
+'use client';
+
+import { useEffect, useState } from 'react';
+import { getDashboardStats, formatRupiah } from '@/lib/api';
+
+export default function HeroJD() {
+  const [totalBudget, setTotalBudget] = useState<string | number>('1314800000'); // Nilai fallback
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getDashboardStats()
+      .then((res) => {
+        setTotalBudget(res.data.total_budget);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <section className="px-4 md:px-10 lg:px-[122px] pt-24 md:pt-32 lg:pt-[237px] flex flex-col gap-6 md:gap-10 bg-[#F5F1E9]">
       <h1 className="text-3xl md:text-5xl lg:text-[64px] font-bold text-[#252525] leading-tight">
@@ -17,7 +34,7 @@ export default function Hero() {
         </p>
 
         <p className="text-2xl md:text-4xl lg:text-[64px] font-semibold text-white">
-          Rp 1.314.800.000
+          {loading ? '...' : formatRupiah(totalBudget)}
         </p>
       </div>
 

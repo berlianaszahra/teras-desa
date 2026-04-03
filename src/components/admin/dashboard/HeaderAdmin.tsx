@@ -14,8 +14,8 @@ export default function HeaderAdmin() {
       </div>
 
       {/* Avatar */}
-      <div className="w-[40px] h-[40px] md:w-[50px] md:h-[50px] rounded-full bg-[#556117] flex items-center justify-center">
-        <span className="text-white font-bold">A</span>
+      <div className="w-[60px] h-[60px] md:w-[50px] md:h-[50px] rounded-full bg-[#556117] flex items-center justify-center">
+        <span className="text-white font-bold text-2xl">A</span>
       </div>
     </header>
   );

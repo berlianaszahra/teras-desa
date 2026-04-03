@@ -88,7 +88,7 @@ export default function TabelLaporanAdmin() {
         Daftar Laporan Warga
       </h2>
 
-      {/* ✅ WRAPPER RESPONSIVE */}
+      {/* wrapper */}
       <div className="w-full overflow-x-auto">
         <div className="min-w-[900px] rounded-[15px] overflow-hidden shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
           

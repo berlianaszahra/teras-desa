@@ -13,10 +13,10 @@ export default function StatsAdmin() {
           className="w-full md:w-[318px] h-[180px] md:h-[200px] bg-[#ECEEE7] border-2 border-[#3F5210] rounded-[15px] p-4 flex flex-col justify-between"
         >
           <div>
-            <p className="text-sm md:text-base text-[#3F5210]">{s.label}</p>
+            <p className="text-xl md:text-sm text-[#3F5210]">{s.label}</p>
             <div className="flex items-end gap-1">
-              {s.prefix && <span className="text-sm">{s.prefix}</span>}
-              <span className="text-3xl md:text-[48px] font-bold text-[#3F5210]">
+              {s.prefix && <span className="text-xl">{s.prefix}</span>}
+              <span className="text-xl md:text-[48px] font-bold text-[#3F5210]">
                 {s.value}
               </span>
             </div>

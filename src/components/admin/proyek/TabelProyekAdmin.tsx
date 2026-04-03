@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { getProjects, PROJECT_STATUS_LABEL, formatRupiah } from "@/lib/api";
 import type { ProjectListItem } from "@/types";
+import DetailProyekModal from "./DetailProyekModal";
  
 const statusColor: Record<string, string> = {
   perencanaan: "#E3AB55",
@@ -16,6 +17,10 @@ export default function TabelProyekAdmin() {
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
+
+  // Detail Modal State
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const limit = 10;
 
@@ -33,6 +38,16 @@ export default function TabelProyekAdmin() {
   const handlePageChange = (p: number) => {
     setLoading(true);
     setPage(p);
+  };
+  
+  const handleOpenDetail = (id: string) => {
+    setSelectedProjectId(id);
+    setIsDetailOpen(true);
+  };
+
+  const handleCloseDetail = () => {
+    setIsDetailOpen(false);
+    setSelectedProjectId(null);
   };
  
   const columns = ["No", "Nama Proyek", "Masa Berjalan", "Lokasi", "Anggaran", "Status", "Aksi"];
@@ -111,7 +126,10 @@ export default function TabelProyekAdmin() {
                     </div>
                   </td>
                   <td className="px-4 py-4 text-center">
-                    <button className="px-5 py-1.5 bg-[#E6E5D9] rounded-full font-bold text-[#5E5151] hover:bg-[#D5D4C8] transition-colors shadow-sm">
+                    <button 
+                      onClick={() => handleOpenDetail(row.id)}
+                      className="px-5 py-1.5 bg-[#E6E5D9] rounded-full font-bold text-[#5E5151] hover:bg-[#D5D4C8] transition-colors shadow-sm"
+                    >
                       Detail
                     </button>
                   </td>
@@ -146,6 +164,14 @@ export default function TabelProyekAdmin() {
             })}
           </div>
         </div>
+      )}
+
+      {/* Modal Detail Proyek */}
+      {isDetailOpen && selectedProjectId && (
+        <DetailProyekModal 
+          projectId={selectedProjectId} 
+          onClose={handleCloseDetail} 
+        />
       )}
     </div>
   );

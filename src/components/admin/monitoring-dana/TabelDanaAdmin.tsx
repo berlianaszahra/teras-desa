@@ -25,7 +25,7 @@ export default function TabelDanaAdmin() {
   const [page] = useState(1);
   const total = data.length;
 
-  const columns = ["No", "Program", "Sumber Dana", "Jumlah", "Tanggal Laporan", "Aksi"];
+  const columns = ["No", "Program", "Sumber Dana", "Jumlah", "Tanggal Laporan"];
 
   return (
     <div className="w-full bg-[#E6E5D9] rounded-2xl p-4 md:p-6 flex flex-col gap-5 shadow-sm">
@@ -46,8 +46,7 @@ export default function TabelDanaAdmin() {
                     ${col === "Program"         ? "" : ""}
                     ${col === "Sumber Dana"     ? "w-[150px]" : ""}
                     ${col === "Jumlah"          ? "w-[160px]" : ""}
-                    ${col === "Tanggal Laporan" ? "w-[140px]" : ""}
-                    ${col === "Aksi"            ? "w-[90px] text-center" : ""}
+                    ${col === "Tanggal Laporan" ? "w-[150px]" : ""}
                   `}
                 >
                   {col}
@@ -72,11 +71,6 @@ export default function TabelDanaAdmin() {
                 </td>
                 <td className="px-4 py-4 font-medium text-[#5E5151]">
                   {row.date}
-                </td>
-                <td className="px-4 py-4 text-center">
-                  <button className="px-5 py-1.5 bg-[#E6E5D9] rounded-full font-bold text-[#5E5151] hover:bg-[#D5D4C8] transition-colors shadow-sm">
-                    Edit
-                  </button>
                 </td>
               </tr>
             ))}

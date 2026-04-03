@@ -3,25 +3,20 @@ import Link from "next/link";
 
 export default function HeaderAdmin() {
   return (
-    <header className="flex items-center justify-between px-4 md:px-[44px] py-4 md:py-[65px]">
+    <header className="flex items-center justify-between px-6 md:px-[60px] py-4 md:py-10">
       <div className="flex items-center gap-2">
-        <div className="w-[50px] md:w-[67px] h-[50px] md:h-[61px] relative">
+        <div className="w-[50px] md:w-[60px] h-[50px] md:h-[60px] relative">
           <Image src="/images/logo-tr.webp" alt="TerasDesa" fill className="object-contain" />
         </div>
-        <span className="text-xl md:text-[32px] font-bold text-[#190B02]">
+        <span className="text-xl md:text-[40px] font-bold text-[#ECEEE7] font-poppins">
           TerasDesa
         </span>
       </div>
 
-      <div className="flex items-center gap-3 md:gap-4">
-        <Link href="/admin/upload-proyek">
-          <button className="bg-[#556117] hover:bg-[#394A0E] text-white font-semibold text-sm md:text-base font-poppins px-4 md:px-6 py-2 md:py-3 rounded-xl transition-colors">
-            + Tambah Proyek
-          </button>
-        </Link>
-        <div className="w-[50px] h-[50px] md:w-[50px] md:h-[50px] rounded-full bg-[#556117] flex items-center justify-center">
-          <span className="text-white font-bold text-3xl">A</span>
-        </div>
+      <div className="flex items-center">
+        <span className="text-2xl md:text-[48px] font-bold text-[#ECEEE7] font-poppins">
+          Admin
+        </span>
       </div>
     </header>
   );

@@ -12,37 +12,35 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   useEffect(() => {
     if (loading) return;
 
-    // Belum login → redirect ke halaman masuk
     if (!isAuthenticated) {
       router.replace('/masuk');
       return;
     }
 
-    // Bukan admin → redirect ke halaman 403
     if (!isAdmin) {
       router.replace('/unauthorized');
       return;
     }
   }, [loading, isAuthenticated, isAdmin, router]);
 
-  // Tampilkan loading saat cek autentikasi
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#F5F1E9]">
-        <span className="text-lg text-[#3F5210] font-semibold">Memverifikasi akses...</span>
+        <span className="text-xl text-[#3F5210] font-bold animate-pulse">Memverifikasi akses...</span>
       </div>
     );
   }
 
-  // Jangan render konten admin jika bukan admin
   if (!isAuthenticated || !isAdmin) {
     return null;
   }
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#F5F1E9' }}>
-      <SidebarAdmin />
-      <main style={{ flex: 1, padding: '24px', overflowX: 'hidden' }}>
+    <div className="flex min-h-screen bg-[#F5F1E9] font-poppins text-[#190B02] selection:bg-[#3F5210] selection:text-white">
+      <div className="flex-shrink-0">
+        <SidebarAdmin />
+      </div>
+      <main className="flex-1 min-w-0 h-screen overflow-y-auto overflow-x-hidden">
         {children}
       </main>
     </div>

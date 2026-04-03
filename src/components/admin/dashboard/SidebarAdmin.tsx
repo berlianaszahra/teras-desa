@@ -20,7 +20,7 @@ export default function SidebarAdmin() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-50 bg-[#2F3E0C] text-white px-3 py-2 rounded-md text-sm"
+        className="md:hidden fixed top-4 left-4 z-50 bg-[#3F5210] text-[#ECEEE7] px-3 py-2 rounded-md text-sm font-poppins font-bold"
       >
         Menu
       </button>
@@ -33,33 +33,28 @@ export default function SidebarAdmin() {
       )}
 
       <aside
-        style={{
-          width: "285px",
-          minWidth: "285px",
-          minHeight: "100vh",
-          backgroundColor: "#2F3E0C",
-          borderRadius: "0 20px 20px 0",
-          display: "flex",
-          flexDirection: "column",
-          paddingTop: "73px",
-          position: "relative",
-        }}
         className={`
-          z-50
+          fixed md:relative z-50
+          w-[280px] md:w-[320px] lg:w-[360px] min-h-screen
+          bg-[#3F5210] rounded-r-[40px] md:rounded-r-[50px]
+          flex flex-col pt-12 md:pt-20 gap-16
           transform transition-transform duration-300
           ${open ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
         `}
       >
-        <div className="flex items-center gap-2 px-[40px] pb-10">
-          <div className="w-[70px] md:w-[80px] h-[70px] md:h-[80px] relative">
+        {/* Logo Section */}
+        <div className="flex items-center gap-3 px-8 md:px-12">
+          <div className="w-[45px] md:w-[54px] h-[45px] md:h-[54px] relative">
             <Image src="/images/logo-tr.webp" alt="TerasDesa" fill className="object-contain" />
           </div>
-          <span className="text-[32px] font-bold text-[#ECEEE7]">
+          <span className="text-2xl md:text-[32px] font-bold text-[#ECEEE7] font-poppins tracking-tight">
             TerasDesa
           </span>
         </div>
-        <nav className="flex flex-col gap-1 px-4">
+
+        {/* Navigation */}
+        <nav className="flex flex-col gap-4 pr-10">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
 
@@ -68,11 +63,17 @@ export default function SidebarAdmin() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center px-[36px] h-16 rounded-[30px] text-xl font-bold transition-colors ${
-                  isActive
-                    ? "bg-[#F5F1E9] text-[#252525]"
-                    : "text-[#ECEEE7] hover:bg-white/10"
-                }`}
+                className={`
+                  flex items-center 
+                  px-8 md:px-12 h-[60px] md:h-[70px] 
+                  text-lg md:text-xl font-bold font-poppins 
+                  transition-all duration-300
+                  ${
+                    isActive
+                      ? "bg-[#F5F1E9] text-[#252525] rounded-r-[50px] shadow-lg"
+                      : "text-[#ECEEE7] hover:bg-white/5 rounded-r-[50px]"
+                  }
+                `}
               >
                 {item.label}
               </Link>

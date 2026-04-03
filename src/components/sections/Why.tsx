@@ -3,8 +3,6 @@ export default function Why() {
     <section className="w-full flex justify-center py-12 md:py-20 lg:py-24 bg-[#F5F1E9]">
 
       <div className="w-full max-w-[1196px] px-4 md:px-10 flex flex-col items-center gap-8 md:gap-12">
-
-        {/* Title */}
         <div className="text-center">
           <h2 className="text-2xl md:text-3xl lg:text-[40px] font-bold text-[#252525]">
             Mengapa TerasDesa?
@@ -14,7 +12,6 @@ export default function Why() {
                           bg-gradient-to-r from-[#3F5210] to-[#8DB824]" />
         </div>
 
-        {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
 
           <Card
@@ -76,12 +73,10 @@ function Card({
                     shadow-sm md:shadow-md rounded-xl md:rounded-[16px]
                     hover:scale-[1.02] transition">
 
-      {/* IMAGE */}
       <div className="w-full md:w-[180px] h-[160px] md:h-[180px] rounded-lg overflow-hidden flex-shrink-0">
         <img src={image} className="w-full h-full object-cover" />
       </div>
 
-      {/* TEXT */}
       <div className="flex flex-col justify-center gap-2 text-center md:text-left">
 
         <h3 className="text-base md:text-xl lg:text-[24px] font-semibold text-[#26310A]">

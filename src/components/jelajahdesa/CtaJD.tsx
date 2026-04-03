@@ -4,10 +4,7 @@ export default function CTAJD() {
   return (
     <div className="relative w-full flex flex-col">
 
-      {/* Top bar */}
       <div className="w-full h-[60px] md:h-[82px] bg-[#A64A0D]" />
-
-      {/* Background */}
       <div
         className="w-full min-h-[400px] md:min-h-[569px] flex items-center justify-center px-4"
         style={{
@@ -15,7 +12,6 @@ export default function CTAJD() {
             "linear-gradient(124.4deg, rgba(252,239,212,0.6) 7.09%, rgba(105,115,49,0.6) 70.32%), url('/images/bg bawah.webp') center/cover no-repeat",
         }}
       >
-        {/* Content */}
         <div className="flex flex-col items-center gap-4 md:gap-6 max-w-[661px] text-center">
 
           <div className="flex flex-col gap-2 md:gap-3">

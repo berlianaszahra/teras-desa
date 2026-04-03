@@ -52,7 +52,6 @@ export default function LoginForm({
         Masuk
       </h1>
 
-      {/* Google */}
       <button
         type="button"
         onClick={onGoogleLogin}
@@ -62,14 +61,12 @@ export default function LoginForm({
         Masuk dengan Google
       </button>
 
-      {/* Divider */}
       <div className="flex items-center gap-3">
         <div className="flex-1 h-px bg-[#252525]/20" />
         <span className="text-xs text-[#252525]/50 font-poppins">Atau</span>
         <div className="flex-1 h-px bg-[#252525]/20" />
       </div>
 
-      {/* Email */}
       <div className="flex flex-col gap-1">
         <input
           type="text"
@@ -81,7 +78,6 @@ export default function LoginForm({
         {errors.email && <span className="text-xs text-red-500 font-poppins">Email wajib diisi</span>}
       </div>
 
-      {/* Password */}
       <div className="flex flex-col gap-1">
         <div className="relative">
           <input

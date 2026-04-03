@@ -49,7 +49,6 @@ export default function AlurLaporan() {
   return (
     <div className="px-6 md:px-12 lg:px-24 py-12 relative">
 
-      {/* Garis (hanya tampil di desktop) */}
       <div className="hidden lg:block absolute top-[80px] left-[10%] right-[10%] border-t border-[#252525]" />
 
       <div className="flex flex-col lg:flex-row items-center justify-between gap-10">
@@ -57,7 +56,6 @@ export default function AlurLaporan() {
         {steps.map((step, i) => (
           <div key={i} className="flex flex-col items-center text-center max-w-[250px] z-10">
 
-            {/* Circle */}
             <div
               className={`
                 w-[120px] h-[120px] md:w-[140px] md:h-[140px] lg:w-[160px] lg:h-[160px]
@@ -67,8 +65,6 @@ export default function AlurLaporan() {
             >
               {step.icon}
             </div>
-
-            {/* Text */}
             <div className="mt-6 space-y-3">
               <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-[#252525]">
                 {step.label}

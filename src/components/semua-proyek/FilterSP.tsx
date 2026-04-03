@@ -21,7 +21,6 @@ export default function FilterSP({ onFilter }: FilterSPProps) {
   return (
     <div className="px-4 md:px-12 lg:px-[122px] flex flex-col md:flex-row items-stretch md:items-center gap-4 md:gap-6">
       
-      {/* Dropdown RW */}
       <div className="relative w-full md:w-[200px] lg:w-[240px]">
         <select
           value={rw}
@@ -42,7 +41,6 @@ export default function FilterSP({ onFilter }: FilterSPProps) {
         </svg>
       </div>
 
-      {/* Dropdown Tahun */}
       <div className="relative w-full md:w-[200px] lg:w-[240px]">
         <select
           value={tahun}
@@ -62,8 +60,6 @@ export default function FilterSP({ onFilter }: FilterSPProps) {
           <path d="M6 9l6 6 6-6" stroke="#252525" strokeWidth="2" />
         </svg>
       </div>
-
-      {/* Search */}
       <input
         type="text"
         placeholder="Masukkan Judul Proyek"
@@ -72,8 +68,6 @@ export default function FilterSP({ onFilter }: FilterSPProps) {
         onKeyDown={(e) => e.key === "Enter" && handleCari()}
         className="w-full md:flex-1 h-[50px] md:h-[56px] px-4 md:px-6 bg-[#F5F1E9] border border-[#252525] rounded-xl md:rounded-2xl text-base md:text-xl text-[#252525] placeholder-[#252525] focus:outline-none"
       />
-
-      {/* Button */}
       <button
         onClick={handleCari}
         className="flex items-center justify-center gap-2 w-full md:w-auto md:px-6 h-[50px] md:h-[56px] bg-[#556117] border border-[#FDF5E3] rounded-xl md:rounded-2xl text-base md:text-xl text-[#FDF5E3] hover:bg-[#3f4a12] transition-colors"

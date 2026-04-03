@@ -1,12 +1,10 @@
 'use client'
 
 import { useState } from "react"
+import type { TimelinePayload } from "@/types"
 
-export interface TimelineStage {
-  stage_name: string
-  stage_date: string
-  status: "selesai" | "belum"
-}
+// Di-re-export dengan alias lokal agar komponen pemanggil tetap bisa mengimpornya dari sini.
+export type TimelineStage = TimelinePayload
 
 interface TimelineInputProps {
   value: TimelineStage[]

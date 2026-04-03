@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# docs (API spec — jangan di-commit ke GitHub)
+src/docs/
+
 # vercel
 .vercel
 

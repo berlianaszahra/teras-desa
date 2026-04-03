@@ -18,7 +18,6 @@ export default function SidebarAdmin() {
 
   return (
     <>
-      {/* Button Mobile */}
       <button
         onClick={() => setOpen(true)}
         className="md:hidden fixed top-4 left-4 z-50 bg-[#2F3E0C] text-white px-3 py-2 rounded-md text-sm"
@@ -26,7 +25,6 @@ export default function SidebarAdmin() {
         Menu
       </button>
 
-      {/* Overlay Mobile */}
       {open && (
         <div
           className="fixed inset-0 bg-black/40 z-40 md:hidden"
@@ -34,7 +32,6 @@ export default function SidebarAdmin() {
         />
       )}
 
-      {/* SIDEBAR */}
       <aside
         style={{
           width: "285px",
@@ -54,7 +51,6 @@ export default function SidebarAdmin() {
           md:translate-x-0
         `}
       >
-        {/* Logo */}
         <div className="flex items-center gap-2 px-[40px] pb-10">
           <div className="w-[70px] md:w-[80px] h-[70px] md:h-[80px] relative">
             <Image src="/images/logo-tr.webp" alt="TerasDesa" fill className="object-contain" />
@@ -63,8 +59,6 @@ export default function SidebarAdmin() {
             TerasDesa
           </span>
         </div>
-
-        {/* Nav */}
         <nav className="flex flex-col gap-1 px-4">
           {navItems.map((item) => {
             const isActive = pathname === item.href;

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import api from "@/lib/axios"
+import { createProject } from "@/lib/api"
 import toast from "react-hot-toast"
 import FormField from "./Formfield"
 import TimelineInput, { TimelineStage } from "./Timelineinput"
@@ -56,7 +56,7 @@ export default function UploadProyekForm() {
       const cleanTimeline = timeline.filter(t => t.stage_name && t.stage_date)
       const cleanExpenses = expenses.filter(ex => ex.expense_name && ex.amount)
 
-      const res = await api.post("/projects", {
+      await createProject({
         title,
         description,
         location,
@@ -71,8 +71,8 @@ export default function UploadProyekForm() {
       toast.success("Proyek berhasil dibuat!")
       router.push("/admin/dashboard")
     } catch (err) {
-      const error = err as { response?: { data?: { message?: string } } }
-      toast.error(error.response?.data?.message || "Gagal membuat proyek")
+      const errorMessage = err instanceof Error ? err.message : "Gagal membuat proyek"
+      toast.error(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -81,16 +81,11 @@ export default function UploadProyekForm() {
   return (
     <div className="min-h-screen bg-[#F5F1E9] px-4 py-10 md:py-16 font-poppins">
       <div className="max-w-5xl mx-auto">
-
-        {/* Header */}
         <h1 className="text-3xl md:text-[64px] font-bold text-[#252525] text-center mb-10 md:mb-14">
           TerasDesa
         </h1>
-
-        {/* Card */}
         <div className="bg-[#E6E5D9] border border-[#3F5210] shadow-[0px_0px_50px_rgba(0,0,0,0.25)] rounded-[30px] md:rounded-[50px] px-6 md:px-14 py-10 md:py-14 flex flex-col gap-10">
 
-          {/* Title bar */}
           <div className="w-full bg-gradient-to-r from-[#A64A0D] to-[#401D05] rounded-[20px] md:rounded-[35px] py-5 flex items-center justify-center">
             <h2 className="text-[#3F5210] font-semibold text-xl md:text-[36px] tracking-wide">
               Tambah Proyek Desa
@@ -99,7 +94,6 @@ export default function UploadProyekForm() {
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-8">
 
-            {/* Status */}
             <FormField label="Status Proyek">
               <select
                 value={status}
@@ -111,8 +105,6 @@ export default function UploadProyekForm() {
                 ))}
               </select>
             </FormField>
-
-            {/* Judul */}
             <FormField label="Judul Proyek">
               <input
                 type="text"
@@ -123,8 +115,6 @@ export default function UploadProyekForm() {
               />
               {errors.title && <span className="text-xs text-red-500">{errors.title}</span>}
             </FormField>
-
-            {/* Deskripsi */}
             <FormField label="Deskripsi Proyek">
               <textarea
                 placeholder="Masukkan deskripsi proyek..."
@@ -136,7 +126,6 @@ export default function UploadProyekForm() {
               {errors.description && <span className="text-xs text-red-500">{errors.description}</span>}
             </FormField>
 
-            {/* Tanggal */}
             <div className="flex flex-col sm:flex-row gap-4 w-full">
               <FormField label="Tanggal Mulai">
                 <input
@@ -158,7 +147,6 @@ export default function UploadProyekForm() {
               </FormField>
             </div>
 
-            {/* Lokasi */}
             <FormField label="Lokasi Proyek">
               <input
                 type="text"
@@ -170,7 +158,6 @@ export default function UploadProyekForm() {
               {errors.location && <span className="text-xs text-red-500">{errors.location}</span>}
             </FormField>
 
-            {/* Total Anggaran */}
             <FormField label="Total Anggaran (Rp)">
               <input
                 type="number"
@@ -182,22 +169,18 @@ export default function UploadProyekForm() {
               {errors.totalBudget && <span className="text-xs text-red-500">{errors.totalBudget}</span>}
             </FormField>
 
-            {/* Timeline */}
             <FormField label="Timeline Proyek">
               <TimelineInput value={timeline} onChange={setTimeline} />
             </FormField>
 
-            {/* Expenses */}
             <FormField label="Rincian Pengeluaran">
               <ExpensesInput value={expenses} onChange={setExpenses} />
             </FormField>
 
-            {/* File Upload */}
             <FormField label="Unggah Bukti Proyek">
               <FileUpload file={file} onChange={setFile} />
             </FormField>
 
-            {/* Submit */}
             <div className="flex justify-end">
               <button
                 type="submit"

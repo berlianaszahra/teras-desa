@@ -109,7 +109,6 @@ function EditProfilForm({
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      {/* Avatar + ganti foto */}
       <div className="flex flex-col items-center gap-2">
         <div className="relative w-[90px] h-[90px]">
           <div className="w-[90px] h-[90px] rounded-full bg-[#5E5151] flex items-center justify-center overflow-hidden">
@@ -129,7 +128,6 @@ function EditProfilForm({
         <span className="text-sm font-semibold text-[#5E5151]">Ganti Foto Profil</span>
       </div>
 
-      {/* Input fields */}
       {formFields.map(({ label, field, type, placeholder }) => (
         <div key={field} className="flex flex-col gap-1 w-full">
           <label className="text-sm font-semibold text-[#190B02]">{label}</label>
@@ -249,7 +247,6 @@ export default function AdminProfilPage() {
   return (
     <div className="w-full bg-[#E6E5D9] rounded-[30px] p-6 flex flex-row gap-6 items-start">
 
-      {/* KIRI: toggle antara view dan edit */}
       <div className="w-[280px] flex-shrink-0">
         {isEditing ? (
           <EditProfilForm
@@ -265,7 +262,6 @@ export default function AdminProfilPage() {
         )}
       </div>
 
-      {/* KANAN: riwayat selalu tampil */}
       <div className="flex-1 flex flex-col gap-6">
         <RiwayatLaporan />
         <RiwayatKomentar />

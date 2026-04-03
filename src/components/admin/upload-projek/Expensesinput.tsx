@@ -1,10 +1,9 @@
 'use client'
 
-export interface ExpenseItem {
-  expense_name: string
-  amount: number
-  percentage: number
-}
+import type { ExpensePayload } from "@/types"
+
+// Di-re-export dengan alias lokal agar komponen pemanggil tetap bisa mengimpornya dari sini.
+export type ExpenseItem = ExpensePayload
 
 interface ExpensesInputProps {
   value: ExpenseItem[]

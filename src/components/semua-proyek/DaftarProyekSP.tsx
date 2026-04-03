@@ -1,17 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { getProjects } from '@/lib/axios'
+import { getProjects } from '@/lib/api'
+import type { ProjectListItem } from '@/types'
 import ProyekCardSP from './ProyekCardSP'
-
-interface Project {
-  id: string
-  title: string
-  status: string
-  totalBudget: string
-  progress: number
-  location: string
-}
 
 interface DaftarProyekSPProps {
   search?: string
@@ -40,17 +32,17 @@ const imageMap: Record<string, string> = {
 }
 
 export default function DaftarProyekSP({ search, tahun }: DaftarProyekSPProps) {
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<ProjectListItem[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-  getProjects({ search, tahun })
-    .then((data) => {
-      setProjects(data.items)
-    })
-    .catch(() => {})
-    .finally(() => setLoading(false))
-}, [search, tahun])
+    getProjects({ search, tahun })
+      .then((res) => {
+        setProjects(res.data.items)
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [search, tahun])
 
   if (loading) return <p className="text-center py-10 font-poppins">Loading...</p>
 
@@ -64,7 +56,7 @@ export default function DaftarProyekSP({ search, tahun }: DaftarProyekSPProps) {
           status={statusLabel[p.status] || p.status}
           anggaran={`Rp. ${Number(p.totalBudget).toLocaleString('id-ID')}`}
           progress={p.progress}
-          image={imageMap[p.title] || '/images/default-project.jpg'}
+          image={imageMap[p.title] || (p.images && p.images.length > 0 ? p.images[0] : '/images/default-project.jpg')}
         />
       ))}
     </section>

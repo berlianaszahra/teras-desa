@@ -32,10 +32,8 @@ export default function FilterChartAdmin() {
   return (
     <div className="w-full bg-[#E6E5D9] rounded-[15px] px-4 md:px-6 py-5 flex flex-col md:flex-row gap-6">
       
-      {/* Pie */}
       <PieChart />
 
-      {/* Legend */}
       <div className="flex flex-wrap md:flex-nowrap gap-4">
         {pieSegments.map((s) => (
           <div key={s.label} className="flex items-center gap-2">
@@ -45,10 +43,7 @@ export default function FilterChartAdmin() {
         ))}
       </div>
 
-      {/* Divider */}
       <div className="hidden md:block w-px h-16 bg-black" />
-
-      {/* Filter */}
       <div className="flex flex-col gap-3">
         <span className="text-lg md:text-2xl font-semibold">
           Filter Laporan

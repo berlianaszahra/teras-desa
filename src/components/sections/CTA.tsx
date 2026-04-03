@@ -4,20 +4,14 @@ import Button from "../ui/Button";
 export function CTA() {
   return (
     <section className="relative w-full min-h-[420px] sm:min-h-[500px] lg:h-[585px] overflow-hidden bg-[#F5F1E9]">
-
-      {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/images/bg bawah.webp')" }}
       />
 
-      {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#FCEFD4]/60 to-[#968E7E]/60" />
 
-      {/* Top Bar */}
       <div className="absolute top-0 left-0 w-full h-[40px] sm:h-[60px] md:h-[82px] bg-[#A64A0D]" />
-
-      {/* Content */}
       <div className="
         relative z-10 
         flex flex-col items-center justify-center 

@@ -2,47 +2,46 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-
-interface Update {
-  id: string
-  progress: number
-  description: string
-  createdAt: string
-}
-
-interface Author {
-  id: string
-  name: string
-  username: string
-}
-
-interface Comment {
-  id: string
-  comment: string
-  isAnonymous: boolean
-  createdAt: string
-  author: Author | string
-}
+import { useRouter } from 'next/navigation'
+import { addComment } from '@/lib/api'
+import type { ProjectUpdate, Comment } from '@/types'
 
 interface UpdateDPProps {
-  updates: Update[]
+  projectId: string
+  updates: ProjectUpdate[]
   comments: Comment[]
 }
 
-export default function UpdateDP({ updates, comments }: UpdateDPProps) {
+export default function UpdateDP({ projectId, updates, comments }: UpdateDPProps) {
   const [komentar, setKomentar] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const router = useRouter()
+
+  const handleKirim = async () => {
+    if (!komentar.trim()) return
+    setSubmitting(true)
+    try {
+      // is_anonymous bisa dibuat toggleable nanti, untuk sementara selalu false
+      await addComment(projectId, { comment: komentar, is_anonymous: false })
+      setKomentar('')
+      router.refresh() // muat ulang data halaman dari server
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Terjadi kesalahan yang tidak diketahui";
+      alert(`Gagal mengirim komentar: ${errorMessage}`);
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <div className="px-4 md:px-12 lg:px-[128px] flex flex-col lg:flex-row gap-4 md:gap-6">
 
-      {/* Update Proyek */}
       <div className="flex-1 bg-[#E6E5D9] shadow-md rounded-2xl md:rounded-[30px] p-4 md:p-6 flex flex-col gap-4">
         <h2 className="text-lg md:text-2xl font-bold text-[#252525]">
           Update Proyek
         </h2>
 
         <div className="flex gap-3">
-          {/* Timeline icon */}
           <div className="flex flex-col items-center w-6 md:w-10 flex-shrink-0">
             {updates.map((u, i) => (
               <div key={u.id} className="flex flex-col items-center">
@@ -56,7 +55,6 @@ export default function UpdateDP({ updates, comments }: UpdateDPProps) {
             ))}
           </div>
 
-          {/* Content */}
           <div className="flex flex-col gap-4 flex-1">
             {updates.map((u) => (
               <div key={u.id} className="flex flex-col gap-1">
@@ -74,7 +72,6 @@ export default function UpdateDP({ updates, comments }: UpdateDPProps) {
         </div>
       </div>
 
-      {/* Komentar */}
       <div className="w-full lg:w-[385px] bg-[#E6E5D9] shadow-md rounded-2xl md:rounded-[30px] p-4 md:p-6 flex flex-col gap-4">
         <h2 className="text-lg md:text-2xl font-bold text-[#252525]">
           Komentar Warga
@@ -107,7 +104,6 @@ export default function UpdateDP({ updates, comments }: UpdateDPProps) {
           })}
         </div>
 
-        {/* Input */}
         <div className="relative mt-2">
           <input
             type="text"
@@ -116,8 +112,12 @@ export default function UpdateDP({ updates, comments }: UpdateDPProps) {
             onChange={(e) => setKomentar(e.target.value)}
             className="w-full h-10 pl-3 pr-24 md:pr-32 bg-[#C3C9B5] border border-[#2B3537] rounded-lg text-xs md:text-sm text-[#252525] placeholder-[#252525] focus:outline-none"
           />
-          <button className="absolute right-0 top-0 h-10 px-4 md:px-6 bg-[#556117] rounded-lg text-xs md:text-sm font-semibold text-white hover:bg-[#3f4a12]">
-            Kirim
+          <button
+            onClick={handleKirim}
+            disabled={submitting}
+            className="absolute right-0 top-0 h-10 px-4 md:px-6 bg-[#556117] rounded-lg text-xs md:text-sm font-semibold text-white hover:bg-[#3f4a12] disabled:opacity-50"
+          >
+            {submitting ? 'Mengirim...' : 'Kirim'}
           </button>
         </div>
       </div>

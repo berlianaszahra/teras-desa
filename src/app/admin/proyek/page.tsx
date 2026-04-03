@@ -9,13 +9,10 @@ export default function ProyekAdminPage() {
       <HeaderAdmin />
  
       <div className="flex flex-col gap-6 px-[44px]">
-        {/* Stats sama seperti dashboard */}
         <StatsAdmin />
  
-        {/* Filter + Pie Chart */}
         <FilterChartAdmin />
  
-        {/* Tabel Proyek */}
         <TabelProyekAdmin />
       </div>
     </div>

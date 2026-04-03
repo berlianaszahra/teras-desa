@@ -22,7 +22,6 @@ export default function RiwayatKomentar() {
           </div>
         ) : (
           <>
-            {/* Header */}
             <div className="flex flex-row">
               {["Nama Proyek", "Tanggal", "Komentar"].map((col) => (
                 <div
@@ -37,8 +36,6 @@ export default function RiwayatKomentar() {
                 </div>
               ))}
             </div>
-
-            {/* Rows */}
             {dummyKomentar.map((row) => (
               <div
                 key={row.id}

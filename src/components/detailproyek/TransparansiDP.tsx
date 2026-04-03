@@ -1,11 +1,6 @@
 'use client'
 
-interface Expense {
-  id: string
-  expenseName: string
-  amount: string
-  percentage: string
-}
+import type { Expense } from "@/types"
 
 interface TransparansiDPProps {
   expenses: Expense[]
@@ -46,7 +41,6 @@ export default function TransparansiDP({ expenses, totalBudget }: TransparansiDP
         </h2>
 
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-6">
-          {/* Pie + Total */}
           <div className="flex flex-col items-center gap-4">
             <PieChart expenses={expenses} />
             <div className="text-center">
@@ -59,10 +53,9 @@ export default function TransparansiDP({ expenses, totalBudget }: TransparansiDP
             </div>
           </div>
 
-          {/* Legend */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
             {expenses.map((d, i) => (
-              <div key={d.id} className="flex items-center gap-4">
+              <div key={d.id ?? i} className="flex items-center gap-4">
                 <div
                   className="w-4 h-4 md:w-5 md:h-5 rounded-full flex-shrink-0"
                   style={{ background: COLORS[i % COLORS.length] }}

@@ -47,7 +47,6 @@ export default function EditProfilForm({ batalkanHref = "/profil" }: { batalkanH
   return (
     <div className="flex flex-col items-center gap-4 w-[280px] flex-shrink-0">
 
-      {/* Avatar + ganti foto */}
       <div className="flex flex-col items-center gap-2">
         <div className="relative w-[90px] h-[90px]">
           <div className="w-[90px] h-[90px] rounded-full bg-[#5E5151] flex items-center justify-center overflow-hidden">
@@ -56,7 +55,6 @@ export default function EditProfilForm({ batalkanHref = "/profil" }: { batalkanH
               <path d="M5 45c0-10 9-18 20-18s20 8 20 18" stroke="#aaa" strokeWidth="2" fill="none" />
             </svg>
           </div>
-          {/* Tombol pensil ganti foto */}
           <label className="absolute bottom-0 right-0 bg-[#3F5210] rounded-full w-[26px] h-[26px] flex items-center justify-center border-2 border-[#E6E5D9] hover:bg-[#2e3d0c] transition-colors cursor-pointer">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path d="M2 10l1.5-4L9 0.5 12.5 4 7 9.5 3 11z" stroke="#fff" strokeWidth="1.2" fill="none" />
@@ -68,7 +66,6 @@ export default function EditProfilForm({ batalkanHref = "/profil" }: { batalkanH
         <span className="text-sm font-semibold text-[#5E5151]">Ganti Foto Profil</span>
       </div>
 
-      {/* Input fields */}
       {fields.map(({ label, field, type, placeholder }) => (
         <div key={field} className="flex flex-col gap-1 w-full">
           <label className="text-sm font-semibold text-[#190B02]">{label}</label>
@@ -82,14 +79,12 @@ export default function EditProfilForm({ batalkanHref = "/profil" }: { batalkanH
         </div>
       ))}
 
-      {/* Notif sukses */}
       {saved && (
         <div className="w-full px-3 py-2 bg-[#3F5210] rounded-lg text-sm font-semibold text-[#FDF5E3] text-center">
           Profil berhasil disimpan!
         </div>
       )}
 
-      {/* Tombol */}
       <button
         onClick={handleSimpan}
         className="w-full py-2 bg-[#FDF5E3] border border-[#190B02] rounded-[10px] text-base font-semibold text-[#190B02] hover:bg-[#e8e0cc] transition-colors"

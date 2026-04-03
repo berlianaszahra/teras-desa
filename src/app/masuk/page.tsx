@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import api, { getCurrentUser } from "@/lib/axios"
+import { login, getCurrentUser, loginWithGoogle } from "@/lib/api"
 import Container from "@/components/loginContainer/Container"
 import Masuk from "@/components/masuk/Masuk"
 import { useGoogleLogin } from "@react-oauth/google"
@@ -20,14 +20,14 @@ export default function LoginPage() {
     setLoading(true)
     setError('')
     try {
-      const res = await api.post('/users/login', { email, password })
-      localStorage.setItem('token', res.data.data.token)
+      const res = await login({ email, password })
+      localStorage.setItem('token', res.data.token)
       const user = await getCurrentUser()
       toast.success('Berhasil masuk!')
-      router.push(user.role === 'admin' ? '/admin/dashboard' : '/dashboard')
+      router.push(user.data.role === 'admin' ? '/admin/dashboard' : '/dashboard')
     } catch (err) {
-      const error = err as { response?: { data?: { message?: string } } }
-      setError(error.response?.data?.message || 'Login gagal, coba lagi')
+      const errorMessage = err instanceof Error ? err.message : 'Login gagal, coba lagi'
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -37,16 +37,14 @@ export default function LoginPage() {
     onSuccess: async (tokenResponse) => {
       setError('')
       try {
-        const res = await api.post('/users/oauth/google', {
-          idToken: tokenResponse.access_token,
-        })
-        localStorage.setItem('token', res.data.data.token)
+        const res = await loginWithGoogle(tokenResponse.access_token)
+        localStorage.setItem('token', res.data.token)
         const user = await getCurrentUser()
         toast.success('Berhasil masuk!')
-        router.push(user.role === 'admin' ? '/admin/dashboard' : '/dashboard')
+        router.push(user.data.role === 'admin' ? '/admin/dashboard' : '/dashboard')
       } catch (err) {
-        const error = err as { response?: { data?: { message?: string } } }
-        setError(error.response?.data?.message || 'Login Google gagal')
+        const errorMessage = err instanceof Error ? err.message : 'Login Google gagal'
+        setError(errorMessage)
       }
     },
     onError: () => setError('Login Google gagal'),

@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import { getProjectById } from '@/lib/axios'
+import { getProjectById } from '@/lib/api'
+import type { ProjectDetail } from '@/types'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import HeroDP from '@/components/detailproyek/HeroDP'
@@ -10,66 +11,15 @@ import DeskripsiDP from '@/components/detailproyek/DeskripsiDP'
 import TransparansiDP from '@/components/detailproyek/TransparansiDP'
 import UpdateDP from '@/components/detailproyek/UpdateDP'
 
-interface Timeline {
-  id: string
-  stageName: string
-  stageDate: string
-  status: 'selesai' | 'diproses' | 'belum'
-}
-
-interface Expense {
-  id: string
-  expenseName: string
-  amount: string
-  percentage: string
-}
-
-interface Update {
-  id: string
-  progress: number
-  description: string
-  createdAt: string
-}
-
-interface Author {
-  id: string
-  name: string
-  username: string
-}
-
-interface Comment {
-  id: string
-  comment: string
-  isAnonymous: boolean
-  createdAt: string
-  author: Author | string
-}
-
-interface Project {
-  id: string
-  title: string
-  description: string
-  location: string
-  totalBudget: string
-  status: string
-  progress: number
-  startDate: string
-  endDate: string
-  timelines: Timeline[]
-  expenses: Expense[]
-  updates: Update[]
-  comments: Comment[]
-}
-
 export default function DetailProyek() {
   const { id } = useParams()
-  const [project, setProject] = useState<Project | null>(null)
+  const [project, setProject] = useState<ProjectDetail | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     if (id) {
       getProjectById(id as string)
-        .then(setProject)
+        .then((res) => setProject(res.data))
         .catch(console.error)
         .finally(() => setLoading(false))
     }
@@ -95,7 +45,7 @@ export default function DetailProyek() {
       <HeroDP
         title={project.title}
         lokasi={project.location}
-        images={['/images/renovasi jalan.webp']}
+        images={project.images?.length ? project.images : ['/images/renovasi jalan.webp']}
         progress={project.progress}
         durasi={`${durasi} Hari`}
         tanggal={tanggal}
@@ -110,6 +60,7 @@ export default function DetailProyek() {
         totalBudget={project.totalBudget}
       />
       <UpdateDP
+        projectId={project.id}
         comments={project.comments}
         updates={project.updates}
       />

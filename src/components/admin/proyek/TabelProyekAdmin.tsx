@@ -1,158 +1,144 @@
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getProjects, PROJECT_STATUS_LABEL, formatRupiah } from "@/lib/api";
+import type { ProjectListItem } from "@/types";
  
-type StatusType = "Diproses" | "Diterima" | "Selesai";
- 
-interface TabelProyek {
-  no: number;
-  namaproyek: string;
-  tanggallaporan: string;
-  lokasi: string;
-  status: StatusType;
-}
- 
-const laporanDana: TabelProyek[] = [
-  { no: 1, namaproyek: "Kerusakan Jalan Utama",  tanggallaporan: "24 Maret 2026", lokasi: "Dusun 1",       status: "Selesai"  },
-  { no: 2, namaproyek: "Lampu Jalan Mati",          tanggallaporan: "23 Maret 2026", lokasi: "RT 02/ RW 03",  status: "Diproses" },
-  { no: 3, namaproyek: "Saluran Air Tersumbat",     tanggallaporan: "12 Maret 2026", lokasi: "Dusun 3",       status: "Diterima" },
-  { no: 4, namaproyek: "Fasilitas Posyandu Rusak",  tanggallaporan: "10 Maret 2026", lokasi: "Dusun 1",       status: "Diproses" },
-  { no: 5, namaproyek: "Sampah Menumpuk",           tanggallaporan: "08 Mar 2026",   lokasi: "RT 01 / RW 03", status: "Diterima" },
-  { no: 6, namaproyek: "Drainase Tidak Lancar",     tanggallaporan: "06 Mar 2026",   lokasi: "Dusun 2",       status: "Diproses" },
-  { no: 7, namaproyek: "Lampu Balai Desa Mati",     tanggallaporan: "07 Mar 2026",   lokasi: "Balai Desa",    status: "Selesai"  },
-];
- 
-const statusOptions: StatusType[] = ["Diproses", "Diterima", "Selesai"];
- 
-const statusColor: Record<StatusType, string> = {
-  Diproses: "#E3AB55",
-  Diterima: "#9F490E",
-  Selesai:  "#3F5210",
+const statusColor: Record<string, string> = {
+  perencanaan: "#E3AB55",
+  berjalan: "#9F490E",
+  selesai: "#3F5210",
 };
  
-function StatusDropdown({
-  value,
-  onChange,
-}: {
-  value: StatusType;
-  onChange: (v: StatusType) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="relative w-[122px]">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 w-full h-[37px] px-4 border border-black rounded-lg text-base font-medium text-[#190B02]"
-        style={{ background: statusColor[value] }}
-      >
-        <span className="flex-1 text-left">{value}</span>
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M5 8l5 5 5-5" stroke="#000" strokeWidth="1.5" strokeLinecap="round"/>
-        </svg>
-      </button>
-      {open && (
-        <div className="absolute top-[37px] left-0 w-full border border-black rounded-b-lg overflow-hidden z-10">
-          {statusOptions.map((opt) => (
-            <button
-              key={opt}
-              onClick={() => { onChange(opt); setOpen(false); }}
-              className="w-full px-4 py-[9px] text-base font-medium text-[#190B02] text-left border-b border-black last:border-b-0"
-              style={{ background: "#E3AB55" }}
-            >
-              {opt}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
- 
 export default function TabelProyekAdmin() {
-  const [data, setData] = useState<TabelProyek[]>(laporanDana);
+  const [data, setData] = useState<ProjectListItem[]>([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  const limit = 10;
+
+  useEffect(() => {
+    getProjects({ page, limit })
+      .then((res) => {
+        setData(res.data.items);
+        setTotal(res.data.total);
+        setTotalPages(res.data.totalPages);
+      })
+      .catch(console.error)
+      .finally(() => setLoading(false));
+  }, [page]);
+
+  const handlePageChange = (p: number) => {
+    setLoading(true);
+    setPage(p);
+  };
  
-  function updateStatus(no: number, status: StatusType) {
-    setData((prev) => prev.map((r) => r.no === no ? { ...r, status } : r));
-  }
- 
-  const columns = ["No", "Nama Proyek", "Tanggal Laporan", "Lokasi" , "Status", "Aksi"];
+  const columns = ["No", "Nama Proyek", "Masa Berjalan", "Lokasi", "Anggaran", "Status", "Aksi"];
  
   return (
     <div className="w-full bg-[#E6E5D9] rounded-[30px] p-6 flex flex-col gap-4">
-      <h2 className="text-xl font-semibold text-[#190B02]">Daftar Laporan Warga</h2>
+      <h2 className="text-xl font-semibold text-[#190B02]">Daftar Proyek Desa</h2>
  
-      {/* Tabel */}
-      <div className="w-full rounded-[15px] overflow-hidden shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
-        {/* Header */}
-        <div className="flex flex-row">
-          {columns.map((col) => (
-            <div
-              key={col}
-              className={`flex items-center justify-center px-4 py-3 bg-[#3F5210] border-b border-[#190B02] text-base font-semibold text-[#FDF5E3]
-                ${col === "No"               ? "w-[60px]"   : ""}
-                ${col === "Nama Proyek"      ? "flex-1"     : ""}
-                ${col === "Tanggal Laporan"  ? "w-[166px]"  : ""}
-                ${col === "Lokasi"           ? "w-[157px]"  : ""}
-                ${col === "Status"           ? "w-[168px]"  : ""}
-                ${col === "Aksi"             ? "w-[99px]"   : ""}
-              `}
-            >
-              {col}
-            </div>
-          ))}
-        </div>
- 
-        {/* Rows */}
-        {data.map((row) => (
-          <div key={row.no} className="flex flex-row border-b border-[#190B02] last:border-b-0 bg-[#FDF5E3]">
-            <div className="w-[60px] flex items-center justify-center px-4 py-4">
-              <span className="text-base font-semibold text-[#5E5151]">{row.no}</span>
-            </div>
-            <div className="flex-1 flex items-center px-4 py-4">
-              <span className="text-base font-semibold text-[#5E5151]">{row.namaproyek}</span>
-            </div>
-            <div className="w-[166px] flex items-center px-4 py-4">
-              <span className="text-base font-semibold text-[#5E5151]">{row.tanggallaporan}</span>
-            </div>
-            <div className="w-[157px] flex items-center px-4 py-4">
-              <span className="text-base font-semibold text-[#5E5151]">{row.lokasi}</span>
-            </div>
-            <div className="w-[168px] flex items-center justify-center px-4 py-4">
-              <StatusDropdown
-                value={row.status}
-                onChange={(v) => updateStatus(row.no, v)}
-              />
-            </div>
-            <div className="w-[99px] flex items-center justify-center px-4 py-4">
-              <button className="px-4 py-2 bg-[#999999] rounded-2xl text-base font-semibold text-black hover:bg-[#888] transition-colors">
-                Detail
-              </button>
-            </div>
+      <div className="w-full overflow-x-auto">
+        <div className="min-w-[900px] rounded-[15px] overflow-hidden shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
+          <div className="flex flex-row">
+            {columns.map((col) => (
+              <div
+                key={col}
+                className={`flex items-center justify-center px-4 py-3 bg-[#3F5210] border-b border-[#190B02] text-base font-semibold text-[#FDF5E3]
+                  ${col === "No"             ? "w-[60px]"   : ""}
+                  ${col === "Nama Proyek"    ? "flex-1"     : ""}
+                  ${col === "Masa Berjalan"  ? "w-[180px]"  : ""}
+                  ${col === "Lokasi"         ? "w-[150px]"  : ""}
+                  ${col === "Anggaran"       ? "w-[140px]"  : ""}
+                  ${col === "Status"         ? "w-[130px]"  : ""}
+                  ${col === "Aksi"           ? "w-[99px]"   : ""}
+                `}
+              >
+                {col}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
- 
-      {/* Pagination */}
-      <div className="flex flex-row items-center justify-between mt-2">
-        <span className="text-xl font-semibold text-[#190B02]">
-          Menampilkan 1 dari 37 Laporan
-        </span>
-        <div className="flex flex-row gap-2">
-          {[1, 2].map((page) => (
-            <button
-              key={page}
-              className="w-[75px] h-[31px] flex items-center justify-center bg-[#ECEEE7] border border-[#3F5210] rounded-[10px] text-xl font-medium text-[#3F5210] hover:bg-[#C3C9B5] transition-colors"
-            >
-              {page}
-            </button>
-          ))}
-          <button className="w-[75px] h-[31px] flex items-center justify-center bg-[#ECEEE7] border border-[#3F5210] rounded-[10px] hover:bg-[#C3C9B5] transition-colors">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path d="M9 6l6 6-6 6" stroke="#3F5210" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-          </button>
+  
+          {loading ? (
+             <div className="p-10 flex justify-center items-center bg-[#FDF5E3]">
+                <span className="text-black">Loading...</span>
+             </div>
+          ) : data.length === 0 ? (
+             <div className="p-10 text-center bg-[#FDF5E3] text-black">Tidak ada proyek</div>
+          ) : (
+            data.map((row, index) => (
+              <div key={row.id} className="flex flex-row border-b border-[#190B02] last:border-b-0 bg-[#FDF5E3]">
+                <div className="w-[60px] flex items-center justify-center px-4 py-4">
+                  <span className="text-base font-semibold text-[#5E5151]">
+                    {(page - 1) * limit + index + 1}
+                  </span>
+                </div>
+                <div className="flex-1 flex items-center px-4 py-4">
+                  <span className="text-base font-semibold text-[#5E5151] truncate" title={row.title}>{row.title}</span>
+                </div>
+                <div className="w-[180px] flex flex-col justify-center px-4 py-4">
+                  <span className="text-xs text-[#5E5151] leading-tight">
+                    {new Date(row.startDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })} -
+                  </span>
+                  <span className="text-xs text-[#5E5151] leading-tight mt-1">
+                    {new Date(row.endDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </span>
+                </div>
+                <div className="w-[150px] flex items-center px-4 py-4">
+                  <span className="text-base font-semibold text-[#5E5151] truncate max-w-full" title={row.location}>
+                    {row.location}
+                  </span>
+                </div>
+                <div className="w-[140px] flex items-center px-4 py-4">
+                  <span className="text-base font-semibold text-[#5E5151]">
+                    {formatRupiah(row.totalBudget, true)}
+                  </span>
+                </div>
+                <div className="w-[130px] flex items-center justify-center px-4 py-4">
+                  <div
+                    className="flex items-center justify-center px-3 py-1 rounded-full text-white text-sm font-medium w-full"
+                    style={{ backgroundColor: statusColor[row.status] || '#A0A0A0' }}
+                  >
+                    {PROJECT_STATUS_LABEL[row.status] || row.status}
+                  </div>
+                </div>
+                <div className="w-[99px] flex items-center justify-center px-4 py-4">
+                  <button className="px-4 py-2 bg-[#999999] rounded-2xl text-base font-semibold text-black hover:bg-[#888] transition-colors">
+                    Detail
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
+  
+      {!loading && total > 0 && (
+        <div className="flex flex-row items-center justify-between mt-2">
+          <span className="text-xl font-semibold text-[#190B02]">
+            Menampilkan {data.length} dari {total} Proyek
+          </span>
+          <div className="flex flex-row gap-2">
+            {Array.from({ length: totalPages }).map((_, i) => {
+              const p = i + 1;
+              return (
+                <button
+                  key={p}
+                  onClick={() => handlePageChange(p)}
+                  className={`w-[40px] h-[31px] flex items-center justify-center border border-[#3F5210] rounded-[10px] text-xl font-medium transition-colors ${
+                    page === p ? "bg-[#3F5210] text-[#FDF5E3]" : "bg-[#ECEEE7] text-[#3F5210] hover:bg-[#C3C9B5]"
+                  }`}
+                >
+                  {p}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

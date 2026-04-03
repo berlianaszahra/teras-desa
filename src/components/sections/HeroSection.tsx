@@ -6,12 +6,9 @@ export default function HeroSection() {
   return (
     <section className="relative w-full min-h-screen bg-[#F5F1E9] overflow-hidden">
 
-      {/* Navbar */}
       <div className="relative z-20">
         <Navbar />
       </div>
-
-      {/* Background */}
       <div className="absolute inset-0 z-0">
         <img
           src="/images/bg.webp"
@@ -23,8 +20,6 @@ export default function HeroSection() {
           bg-[linear-gradient(206.5deg,rgba(102,102,102,0.6)_14.78%,rgba(0,0,0,0.7)_85.22%)]"
         />
       </div>
-
-      {/* Content */}
       <div className="
         relative z-10 
         max-w-7xl mx-auto 

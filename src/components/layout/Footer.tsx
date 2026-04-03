@@ -4,10 +4,8 @@ export default function Footer() {
 
       <div className="flex flex-col md:flex-row justify-between gap-10 md:gap-16">
 
-        {/* LEFT */}
         <div className="flex flex-col gap-4 items-center md:items-start text-center md:text-left">
 
-          {/* Logo (FIXED) */}
           <img
             src="/images/logo-tr.webp"
             alt="logo"
@@ -20,12 +18,10 @@ export default function Footer() {
             "
           />
 
-          {/* Follow */}
           <p className="text-lg md:text-xl font-semibold">
             Follow us!
           </p>
 
-          {/* Social */}
           <div className="flex gap-4 text-lg md:text-xl">
             <span className="cursor-pointer hover:opacity-70 "><img src="/images/x-white.png" alt="Twitter" className="w-6 h-6 object-contain" /></span>
             <span className="cursor-pointer hover:opacity-70"><img src="/images/ig-whitee.png" alt="Instagram" className="w-6 h-6 object-contain" /></span>
@@ -34,10 +30,8 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* RIGHT */}
         <div className="grid grid-cols-2 gap-8 md:gap-[70px] text-center md:text-left">
 
-          {/* Tentang Kami */}
           <div className="flex flex-col gap-2 md:gap-3">
             <h4 className="text-sm md:text-base font-semibold">
               Tentang Kami
@@ -54,7 +48,6 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Tautan */}
           <div className="flex flex-col gap-2 md:gap-3">
             <h4 className="text-sm md:text-base font-semibold">
               Tautan Lainnya
@@ -73,8 +66,6 @@ export default function Footer() {
 
         </div>
       </div>
-
-      {/* Bottom */}
       <div className="mt-8 md:mt-12 text-center text-xs md:text-sm opacity-80">
         © 2026 TerasDesa. All rights reserved. Sistem Informasi Transparansi Desa
       </div>

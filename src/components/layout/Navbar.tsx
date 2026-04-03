@@ -23,10 +23,7 @@ export default function Navbar() {
   return (
     <nav className="absolute top-0 left-0 w-full z-50">
 
-      {/* MAIN NAVBAR */}
       <div className="max-w-7xl mx-auto px-4 md:px-10 py-4 flex items-center justify-between">
-
-        {/* Logo */}
         <div className="flex items-center gap-2">
           <Link href="/landing-page">
             <img
@@ -42,7 +39,6 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-3">
           {isLoggedIn ? (
             <div className="flex items-center gap-3">
@@ -76,7 +72,6 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* HAMBURGER */}
         <button
           onClick={() => setOpen(!open)}
           className="md:hidden text-2xl text-black"
@@ -85,7 +80,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* MOBILE MENU */}
       {open && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-md shadow-md px-4 py-4 flex flex-col gap-3 rounded-b-2xl">
           {isLoggedIn ? (

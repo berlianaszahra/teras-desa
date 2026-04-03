@@ -80,10 +80,7 @@ export default function TabelDanaAdmin() {
   return (
     <div className="w-full bg-[#E6E5D9] rounded-[30px] p-6 flex flex-col gap-4">
       <h2 className="text-xl font-semibold text-[#190B02]">Daftar Laporan Warga</h2>
- 
-      {/* Tabel */}
       <div className="w-full rounded-[15px] overflow-hidden shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
-        {/* Header */}
         <div className="flex flex-row">
           {columns.map((col) => (
             <div
@@ -101,8 +98,6 @@ export default function TabelDanaAdmin() {
             </div>
           ))}
         </div>
- 
-        {/* Rows */}
         {data.map((row) => (
           <div key={row.no} className="flex flex-row border-b border-[#190B02] last:border-b-0 bg-[#FDF5E3]">
             <div className="w-[60px] flex items-center justify-center px-4 py-4">
@@ -131,8 +126,6 @@ export default function TabelDanaAdmin() {
           </div>
         ))}
       </div>
- 
-      {/* Pagination */}
       <div className="flex flex-row items-center justify-between mt-2">
         <span className="text-xl font-semibold text-[#190B02]">
           Menampilkan 1 dari 37 Laporan

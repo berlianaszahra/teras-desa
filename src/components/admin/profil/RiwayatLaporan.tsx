@@ -31,7 +31,6 @@ export default function RiwayatLaporan() {
       <h2 className="text-xl font-semibold text-[#190B02]">Riwayat Laporan</h2>
 
       <div className="w-full rounded-[15px] overflow-hidden shadow-[0_4px_4px_rgba(0,0,0,0.25)]">
-        {/* Header */}
         <div className="flex flex-row">
           {columns.map((col) => (
             <div
@@ -47,8 +46,6 @@ export default function RiwayatLaporan() {
             </div>
           ))}
         </div>
-
-        {/* Rows */}
         {dummyLaporan.map((row) => (
           <div
             key={row.id}

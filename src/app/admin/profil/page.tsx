@@ -21,6 +21,8 @@ const statusColor: Record<ReportStatus, string> = {
 
 const laporanColumns = ['ID', 'Nama Jalan', 'Tanggal Laporan', 'Status'];
 
+import HeaderAdmin from '@/components/admin/dashboard/HeaderAdmin';
+
 export default function AdminProfilPage() {
   const [user, setUser] = useState<User | null>(null);
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
@@ -96,181 +98,188 @@ export default function AdminProfilPage() {
     }
   }
 
+  const laporanColumns = ['ID', 'Judul Laporan', 'Tanggal Laporan', 'Status'];
+
   if (loadingUser) {
     return (
-      <div className="flex items-center justify-center min-h-[500px]">
-        <span className="text-xl font-bold animate-pulse text-[#3F5210]">Memuat data profil...</span>
+      <div className="flex flex-col gap-6 pb-12 overflow-hidden h-screen">
+        <HeaderAdmin />
+        <div className="flex items-center justify-center flex-1">
+          <span className="text-xl font-bold animate-pulse text-[#3F5210]">Memuat data profil...</span>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-[#F5F1E9] font-poppins text-[#190B02] relative">
-      
-      {/* Top Right Admin Label */}
-      <div className="absolute top-10 right-14 z-10 hidden md:block">
-        <span className="text-3xl font-bold text-[#190B02]">Admin</span>
-      </div>
+    <div className="flex flex-col gap-6 pb-12 overflow-hidden">
+      <HeaderAdmin />
 
-      {/* Sidebar Edit Profile (Green Gradient) */}
-      <div className="w-full max-w-[420px] bg-gradient-to-b from-[#5D6B1D] to-[#190B02] p-10 md:p-14 flex flex-col items-start gap-10 shadow-2xl">
+      <div className="flex flex-col gap-6 px-4 md:px-8">
         
-        {/* Logo TerasDesa Top Left */}
-        <div className="flex items-center gap-4 mb-2">
-          <Image src="/logo.svg" alt="TerasDesa" width={48} height={48} className="brightness-0 invert" />
-          <span className="text-3xl font-bold text-white tracking-tight">TerasDesa</span>
-        </div>
-
-        {/* Profile Pic Large */}
-        <div className="relative w-[180px] h-[180px] md:w-[200px] md:h-[200px] mx-auto">
-          <div className="w-full h-full rounded-full border-4 border-[#F5F1E9]/20 overflow-hidden relative bg-[#E6E5D9]/10">
-            {profilePicture ? (
-              <Image src={profilePicture} alt="Profile Picture" fill className="object-cover" unoptimized />
-            ) : (
-              <div className="flex items-center justify-center w-full h-full text-white/50 bg-[#3F5210]">
-                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <circle cx="12" cy="7" r="4" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+        {/* Profile Card Section */}
+        <div className="w-full bg-[#E6E5D9] rounded-2xl p-6 md:p-8 flex flex-col md:flex-row gap-10 shadow-sm border border-[#3F5210]/10">
+          
+          {/* Foto Profil Area */}
+          <div className="flex flex-col items-center gap-6 justify-center">
+            <div className="relative w-[160px] h-[160px] md:w-[200px] md:h-[200px]">
+              <div className="w-full h-full rounded-full border-4 border-[#3F5210]/20 overflow-hidden relative bg-[#FDF5E3]">
+                {profilePicture ? (
+                  <Image src={profilePicture} alt="Profile Picture" fill className="object-cover" unoptimized />
+                ) : (
+                  <div className="flex items-center justify-center w-full h-full text-[#3F5210]/30 bg-[#FDF5E3]">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <circle cx="12" cy="7" r="4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                )}
               </div>
-            )}
+              <label className="absolute bottom-2 right-2 bg-[#3F5210] hover:bg-[#2F3E0C] p-3 rounded-full shadow-lg cursor-pointer transition-transform active:scale-90 group border-[3px] border-[#E6E5D9]">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FDF5E3" strokeWidth="2.5">
+                  <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <input type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
+              </label>
+            </div>
+            <div className="flex flex-col text-center">
+              <span className="text-xl font-bold font-poppins text-[#190B02]">{user?.name || "Admin"}</span>
+              <span className="text-sm font-semibold text-[#5E5151]">Administrator</span>
+            </div>
           </div>
-          <label className="absolute bottom-2 right-2 md:bottom-4 md:right-4 bg-[#F5F1E9] hover:bg-white p-3 rounded-full shadow-lg cursor-pointer transition-transform active:scale-90 group">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#190B02" strokeWidth="2.5">
-              <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <input type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
-          </label>
+
+          <div className="hidden md:block w-px bg-[#3F5210]/20" />
+
+          {/* Form Area */}
+          <div className="flex-1 flex flex-col gap-6">
+            <h2 className="text-xl font-bold text-[#190B02] font-poppins mb-2">Informasi Profil</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[#3F5210] font-bold text-sm">Nama Lengkap</label>
+                <input 
+                  type="text" 
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full bg-[#FDF5E3] border border-[#3F5210]/20 rounded-xl px-4 py-3 text-[#190B02] text-sm focus:outline-none focus:border-[#3F5210] transition-colors"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[#3F5210] font-bold text-sm">Nama Pengguna</label>
+                <input 
+                  type="text" 
+                  value={formData.username}
+                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  className="w-full bg-[#FDF5E3] border border-[#3F5210]/20 rounded-xl px-4 py-3 text-[#190B02] text-sm focus:outline-none focus:border-[#3F5210] transition-colors"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[#3F5210] font-bold text-sm">Email</label>
+                <input 
+                  type="email" 
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-[#FDF5E3] border border-[#3F5210]/20 rounded-xl px-4 py-3 text-[#190B02] text-sm focus:outline-none focus:border-[#3F5210] transition-colors"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[#3F5210] font-bold text-sm">No. Telepon</label>
+                <input 
+                  type="tel" 
+                  value={formData.phoneNumber}
+                  onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+                  className="w-full bg-[#FDF5E3] border border-[#3F5210]/20 rounded-xl px-4 py-3 text-[#190B02] text-sm focus:outline-none focus:border-[#3F5210] transition-colors"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-4 justify-end">
+              <button 
+                onClick={() => fetchData()}
+                className="bg-[#ECEEE7] hover:bg-white text-[#3F5210] border border-[#3F5210] font-bold text-sm px-6 py-2.5 rounded-xl transition-transform active:scale-[0.98]"
+              >
+                Batal
+              </button>
+              <button 
+                onClick={handleSimpan}
+                disabled={saving}
+                className="bg-[#3F5210] hover:bg-[#2F3E0C] text-[#FDF5E3] font-bold text-sm px-8 py-2.5 rounded-xl shadow-md transition-transform active:scale-[0.98] disabled:opacity-50"
+              >
+                {saving ? "Menyimpan..." : "Simpan Perubahan"}
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Input Form Sederhana Minimalis */}
-        <div className="flex flex-col gap-6 w-full mt-4">
-          <div className="flex flex-col gap-2">
-            <label className="text-white font-bold text-lg">Nama Lengkap</label>
-            <input 
-              type="text" 
-              placeholder="Masukkan nama lengkap"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full bg-white/10 border border-white/20 rounded-2xl px-5 py-4 text-white text-lg placeholder:text-white/30 focus:outline-none focus:border-white transition-colors"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label className="text-white font-bold text-lg">Nama Pengguna</label>
-            <input 
-              type="text" 
-              placeholder="Masukkan username"
-              value={formData.username}
-              onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-              className="w-full bg-white/10 border border-white/20 rounded-2xl px-5 py-4 text-white text-lg placeholder:text-white/30 focus:outline-none focus:border-white transition-colors"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label className="text-white font-bold text-lg">Email</label>
-            <input 
-              type="email" 
-              placeholder="Masukkan email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="w-full bg-white/10 border border-white/20 rounded-2xl px-5 py-4 text-white text-lg placeholder:text-white/30 focus:outline-none focus:border-white transition-colors"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label className="text-white font-bold text-lg">No. Telepon</label>
-            <input 
-              type="tel" 
-              placeholder="Masukkan no. telepon"
-              value={formData.phoneNumber}
-              onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
-              className="w-full bg-white/10 border border-white/20 rounded-2xl px-5 py-4 text-white text-lg placeholder:text-white/30 focus:outline-none focus:border-white transition-colors"
-            />
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="flex flex-col gap-4 w-full mt-4">
-          <button 
-            onClick={handleSimpan}
-            disabled={saving}
-            className="w-full bg-[#F5F1E9] hover:bg-white text-[#190B02] font-bold text-xl md:text-2xl py-4.5 rounded-[20px] shadow-lg transition-transform active:scale-[0.98] disabled:opacity-50"
-          >
-            {saving ? "Menyimpan..." : "Simpan"}
-          </button>
-          <button 
-            onClick={() => fetchData()}
-            className="w-full bg-transparent border-2 border-[#F5F1E9] hover:bg-white/5 text-white font-bold text-xl md:text-2xl py-4 rounded-[20px] shadow-sm transition-transform active:scale-[0.98]"
-          >
-            Batalkan
-          </button>
-        </div>
-
-      </div>
-
-      {/* Main Content Area (Beige for Riwayat Laporan) */}
-      <div className="flex-1 p-10 md:p-20 overflow-y-auto">
-        <div className="max-w-[1000px] flex flex-col gap-10">
-          <h2 className="text-[48px] md:text-[64px] font-bold text-[#190B02]">
-            Riwayat Laporan
+        {/* Riwayat Laporan Table Section */}
+        <div className="w-full bg-[#E6E5D9] rounded-2xl p-4 md:p-6 flex flex-col gap-5 shadow-sm border border-[#3F5210]/10">
+          <h2 className="text-lg md:text-xl font-bold text-[#190B02] font-poppins">
+            Riwayat Laporan Anda
           </h2>
 
-          <div className="w-full rounded-[35px] overflow-hidden shadow-xl border border-[#3F5210]/10">
-            {/* Table Header */}
-            <div className="flex flex-row bg-[#3F5210] h-[80px]">
-              {laporanColumns.map((col) => (
-                <div
-                  key={col}
-                  className={`flex items-center px-10 text-xl md:text-2xl font-bold text-white
-                    ${col === 'ID'               ? 'w-[120px] justify-center' : ''}
-                    ${col === 'Nama Jalan'       ? 'flex-1'                   : ''}
-                    ${col === 'Tanggal Laporan'  ? 'w-[260px]'                : ''}
-                    ${col === 'Status'           ? 'w-[200px] justify-center' : ''}
-                  `}
-                >
-                  {col}
-                </div>
-              ))}
-            </div>
-
-            {/* Table Body */}
-            <div className="bg-white">
-              {loadingReports ? (
-                <div className="p-20 text-center text-xl font-bold text-[#3F5210] animate-pulse">
-                  Memuat riwayat...
-                </div>
-              ) : reports.length === 0 ? (
-                <div className="p-20 text-center text-xl font-bold text-[#5E5151]">
-                  Belum ada riwayat laporan warga.
-                </div>
-              ) : (
-                reports.map((row, index) => (
-                  <div key={row.id} className="flex flex-row border-b border-[#3F5210]/10 last:border-b-0 hover:bg-[#FDF5E3] transition-colors min-h-[90px]">
-                    <div className="w-[120px] flex items-center justify-center px-10 text-xl font-bold text-[#5E5151]">
-                      #{String(index + 1).padStart(3, '0')}
-                    </div>
-                    <div className="flex-1 flex items-center px-10 text-xl md:text-2xl font-bold text-[#190B02]">
-                      {row.title}
-                    </div>
-                    <div className="w-[260px] flex items-center px-10 text-xl font-medium text-[#5E5151]">
-                      {new Date(row.createdAt).toLocaleDateString('id-ID', {
-                        day: 'numeric', month: 'long', year: 'numeric'
-                      })}
-                    </div>
-                    <div className="w-[200px] flex items-center justify-center px-10">
-                      <span
-                        className="px-6 py-2 rounded-xl text-lg font-bold text-white shadow-sm uppercase tracking-wide"
-                        style={{ background: statusColor[row.status] }}
-                      >
-                        {REPORT_STATUS_LABEL[row.status] ?? row.status}
-                      </span>
-                    </div>
-                  </div>
-                ))
-              )}
-            </div>
+          <div className="w-full overflow-x-auto rounded-xl border border-[#3F5210]/10 shadow-sm">
+            <table className="w-full min-w-[700px] border-collapse">
+              <thead className="bg-[#3F5210] text-[#FDF5E3] font-poppins text-xs font-bold">
+                <tr>
+                  {laporanColumns.map((col) => (
+                    <th
+                      key={col}
+                      className={`px-4 py-4 text-left border-r border-[#ECEEE7]/10 last:border-0
+                        ${col === 'ID'              ? 'w-[70px] text-center' : ''}
+                        ${col === 'Judul Laporan'   ? ''                   : ''}
+                        ${col === 'Tanggal Laporan' ? 'w-[150px]'          : ''}
+                        ${col === 'Status'          ? 'w-[120px] text-center' : ''}
+                      `}
+                    >
+                      {col}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="bg-[#FDF5E3]">
+                {loadingReports ? (
+                  <tr>
+                    <td colSpan={4} className="p-8 text-center text-sm font-poppins font-bold text-[#3F5210]">
+                      Memuat riwayat...
+                    </td>
+                  </tr>
+                ) : reports.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="p-8 text-center text-sm font-poppins font-bold text-[#3F5210]">
+                      Belum ada riwayat laporan.
+                    </td>
+                  </tr>
+                ) : (
+                  reports.map((row, index) => (
+                    <tr key={row.id} className="border-b border-[#3F5210]/10 last:border-0 hover:bg-[#F2EEDA] transition-colors font-poppins text-xs">
+                      <td className="px-4 py-4 font-bold text-[#5E5151] text-center">
+                        #{String(index + 1).padStart(3, '0')}
+                      </td>
+                      <td className="px-4 py-4 font-bold text-[#190B02]">
+                        {row.title}
+                      </td>
+                      <td className="px-4 py-4 font-medium text-[#5E5151]">
+                        {new Date(row.createdAt).toLocaleDateString('id-ID', {
+                          day: 'numeric', month: 'short', year: 'numeric'
+                        })}
+                      </td>
+                      <td className="px-4 py-4 text-center">
+                        <div
+                          className="inline-flex items-center justify-center px-4 py-1.5 rounded-full text-[#FDF5E3] font-bold w-full"
+                          style={{ backgroundColor: statusColor[row.status] || '#A0A0A0' }}
+                        >
+                          {REPORT_STATUS_LABEL[row.status] || row.status}
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
   );
 }

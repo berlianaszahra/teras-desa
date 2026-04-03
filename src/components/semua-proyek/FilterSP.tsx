@@ -2,8 +2,18 @@
 
 import { useState } from "react";
 
-const rwOptions = ["Semua RW", "RW 01", "RW 02", "RW 03", "RW 04"];
-const tahunOptions = ["Semua Tahun", "2026", "2025", "2024"];
+// RW 01 sampai RW 20
+const rwOptions = [
+  "Semua RW",
+  ...Array.from({ length: 20 }, (_, i) => `RW ${String(i + 1).padStart(2, '0')}`),
+];
+
+// 5 tahun terakhir secara dinamis
+const currentYear = new Date().getFullYear();
+const tahunOptions = [
+  "Semua Tahun",
+  ...Array.from({ length: 5 }, (_, i) => String(currentYear - i)),
+];
 
 interface FilterSPProps {
   onFilter?: (rw: string, tahun: string, search: string) => void;

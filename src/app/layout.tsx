@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Providers from "./providers";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -25,7 +26,9 @@ export default function RootLayout({
         className={`${poppins.className} `}
       >
         <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
+        <Providers>
         {children}
+        </Providers>
         </GoogleOAuthProvider>
       </body>
     </html>

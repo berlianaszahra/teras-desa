@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { getDashboardStats, formatRupiah } from '@/lib/api';
 
 export default function HeroJD() {
-  const [totalBudget, setTotalBudget] = useState<string | number>('1314800000'); // Nilai fallback
+  const [totalBudget, setTotalBudget] = useState<string | number>('0');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { getProjects, formatRupiah, PROJECT_STATUS_LABEL } from '@/lib/api';
 import type { ProjectListItem } from '@/types';
 
-/** Fallback thumbnail if the project has no images */
+// Gambar placeholder jika proyek tidak punya foto
 const FALLBACK_IMAGE = '/images/renovasi jalan.webp';
 
 export default function ProyekJD() {

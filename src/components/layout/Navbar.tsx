@@ -1,24 +1,19 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/lib/auth-context';
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return !!localStorage.getItem('token')
-    }
-    return false
-  });
+  const { isAuthenticated, isAdmin, logout: authLogout } = useAuth();
   const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    setIsLoggedIn(false)
-    router.push('/')
-  }
+    authLogout();
+    router.push('/');
+  };
 
   return (
     <nav className="absolute top-0 left-0 w-full z-50">
@@ -40,8 +35,16 @@ export default function Navbar() {
         </div>
 
         <div className="hidden md:flex items-center gap-3">
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <div className="flex items-center gap-3">
+              {isAdmin && (
+                <Link
+                  href="/admin/dashboard"
+                  className="px-4 py-2 rounded-xl bg-[#3F5210] text-white font-semibold text-sm hover:bg-[#2e3d0c] transition"
+                >
+                  Dashboard Admin
+                </Link>
+              )}
               <Link href="/profil">
                 <div className="w-9 h-9 rounded-full bg-[#556117] flex items-center justify-center text-white font-bold text-sm cursor-pointer hover:bg-[#445012] transition">
                   P
@@ -82,8 +85,17 @@ export default function Navbar() {
 
       {open && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-md shadow-md px-4 py-4 flex flex-col gap-3 rounded-b-2xl">
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <>
+              {isAdmin && (
+                <Link
+                  href="/admin/dashboard"
+                  onClick={() => setOpen(false)}
+                  className="w-full text-center px-4 py-2 rounded-xl bg-[#3F5210] text-white font-semibold"
+                >
+                  Dashboard Admin
+                </Link>
+              )}
               <Link
                 href="/profil"
                 onClick={() => setOpen(false)}

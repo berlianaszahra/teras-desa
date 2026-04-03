@@ -23,31 +23,31 @@ function StatusDropdown({
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative w-[140px]">
+    <div className="relative w-[100px]">
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-2 w-full h-[44px] px-5 rounded-xl text-lg font-bold text-[#FDF5E3] transition-colors"
+        className="flex items-center gap-1 w-full h-[32px] px-3 rounded-full text-xs font-bold text-[#FDF5E3] transition-colors"
         style={{ background: statusColor[value] }}
       >
-        <span className="flex-1 text-left uppercase">{REPORT_STATUS_LABEL[value]}</span>
+        <span className="flex-1 text-left">{REPORT_STATUS_LABEL[value]}</span>
         <svg 
-          width="20" height="20" viewBox="0 0 20 20" fill="none" 
-          className={`transform transition-transform ${open ? 'rotate-180' : ''}`}
+          width="14" height="14" viewBox="0 0 20 20" fill="none" 
+          className={`transform transition-transform flex-shrink-0 ${open ? 'rotate-180' : ''}`}
         >
           <path d="M5 8l5 5 5-5" stroke="#FDF5E3" strokeWidth="2.5" strokeLinecap="round"/>
         </svg>
       </button>
 
       {open && (
-        <div className="absolute top-[48px] left-0 w-full rounded-xl overflow-hidden z-10 shadow-xl border border-[#3F5210]/10">
+        <div className="absolute top-[36px] left-0 w-full rounded-lg overflow-hidden z-10 shadow-xl border border-[#3F5210]/10">
           {statusOptions.map((opt) => (
             <button
               key={opt}
               onClick={() => { onChange(opt); setOpen(false); }}
-              className="w-full px-5 py-3 text-lg font-bold text-[#FDF5E3] text-left border-b border-white/10 last:border-b-0 hover:brightness-110"
+              className="w-full px-3 py-2 text-xs font-bold text-[#FDF5E3] text-left border-b border-white/10 last:border-b-0 hover:brightness-110"
               style={{ background: statusColor[opt] }}
             >
-              <span className="uppercase">{REPORT_STATUS_LABEL[opt]}</span>
+              {REPORT_STATUS_LABEL[opt]}
             </button>
           ))}
         </div>
@@ -63,14 +63,12 @@ export default function TabelLaporanAdmin({ status }: { status: string }) {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  // Detail Modal State
   const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const limit = 10;
 
   useEffect(() => {
-    setLoading(true);
     const filterStatus = status === "Semua" ? undefined : status.toLowerCase() as ReportStatus;
     getReports({ page, limit, status: filterStatus })
       .then((res) => {
@@ -82,26 +80,14 @@ export default function TabelLaporanAdmin({ status }: { status: string }) {
       .finally(() => setLoading(false));
   }, [page, status]);
 
-  const handlePageChange = (p: number) => {
-    setPage(p);
-  };
-
-  const handleOpenDetail = (id: string) => {
-    setSelectedReportId(id);
-    setIsDetailOpen(true);
-  };
-
-  const handleCloseDetail = () => {
-    setIsDetailOpen(false);
-    setSelectedReportId(null);
-  };
+  const handlePageChange = (p: number) => { setPage(p); };
+  const handleOpenDetail = (id: string) => { setSelectedReportId(id); setIsDetailOpen(true); };
+  const handleCloseDetail = () => { setIsDetailOpen(false); setSelectedReportId(null); };
 
   async function updateStatus(id: string, newStatus: ReportStatus) {
     try {
       await updateReportStatus(id, newStatus);
-      setData((prev) =>
-        prev.map((r) => (r.id === id ? { ...r, status: newStatus } : r))
-      );
+      setData((prev) => prev.map((r) => (r.id === id ? { ...r, status: newStatus } : r)));
     } catch (err) {
       alert("Gagal memperbarui status");
     }
@@ -111,91 +97,102 @@ export default function TabelLaporanAdmin({ status }: { status: string }) {
 
   return (
     <>
-      <div className="w-full bg-[#E6E5D9] rounded-[35px] p-8 md:p-10 flex flex-col gap-10 shadow-sm relative">
-        <h2 className="text-[36px] font-bold text-[#190B02] font-poppins">
+      <div className="w-full bg-[#E6E5D9] rounded-2xl p-4 md:p-6 flex flex-col gap-5 shadow-sm">
+        <h2 className="text-lg md:text-xl font-bold text-[#190B02] font-poppins">
           Daftar Laporan Warga
         </h2>
 
-        <div className="w-full overflow-x-auto">
-          <div className="min-w-[1100px] rounded-[25px] overflow-hidden border border-[#3F5210]/10">
-            <div className="flex flex-row bg-[#3F5210] text-[#FDF5E3] font-poppins h-[70px]">
-              {columns.map((col) => (
-                <div
-                  key={col}
-                  className={`flex items-center px-6 py-5 text-xl font-bold border-r border-[#ECEEE7]/10 last:border-0
-                    ${col === "ID"               ? "w-[120px] justify-center" : ""}
-                    ${col === "Judul"            ? "flex-[1.5]" : ""}
-                    ${col === "Kategori"         ? "w-[200px]" : ""}
-                    ${col === "Tanggal Laporan"  ? "w-[220px]" : ""}
-                    ${col === "Lokasi"           ? "flex-1" : ""}
-                    ${col === "Status"           ? "w-[200px] justify-center" : ""}
-                    ${col === "Aksi"             ? "w-[140px] justify-center" : ""}
-                  `}
-                >
-                  {col}
-                </div>
-              ))}
-            </div>
-
-            <div className="bg-[#FDF5E3]">
+        {/* Tabel Container dengan rounded corners */}
+        <div className="w-full overflow-x-auto rounded-xl border border-[#3F5210]/10 shadow-sm">
+          <table className="w-full min-w-[800px] border-collapse">
+            <thead className="bg-[#3F5210] text-[#FDF5E3] font-poppins text-xs font-bold">
+              <tr>
+                {columns.map((col) => (
+                  <th
+                    key={col}
+                    className={`px-4 py-4 text-left border-r border-[#ECEEE7]/10 last:border-0
+                      ${col === "ID"              ? "w-[80px] text-center" : ""}
+                      ${col === "Judul"           ? "" : ""}
+                      ${col === "Kategori"        ? "w-[130px]" : ""}
+                      ${col === "Tanggal Laporan" ? "w-[140px]" : ""}
+                      ${col === "Lokasi"          ? "w-[140px]" : ""}
+                      ${col === "Status"          ? "w-[130px] text-center" : ""}
+                      ${col === "Aksi"            ? "w-[90px] text-center" : ""}
+                    `}
+                  >
+                    {col}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="bg-[#FDF5E3]">
               {loading ? (
-                <div className="p-24 text-center text-2xl font-poppins font-bold text-[#3F5210]">Memuat laporan...</div>
+                <tr>
+                  <td colSpan={7} className="p-10 text-center text-sm font-poppins font-bold text-[#3F5210]">
+                    Memuat laporan...
+                  </td>
+                </tr>
               ) : data.length === 0 ? (
-                <div className="p-24 text-center text-2xl font-poppins font-bold text-[#3F5210]">Tidak ada laporan ditemukan</div>
+                <tr>
+                  <td colSpan={7} className="p-10 text-center text-sm font-poppins font-bold text-[#3F5210]">
+                    Tidak ada laporan ditemukan
+                  </td>
+                </tr>
               ) : (
                 data.map((row, index) => (
-                  <div key={row.id} className="flex flex-row border-b border-[#3F5210]/10 last:border-0 hover:bg-[#F2EEDA] transition-colors font-poppins min-h-[90px]">
-                    <div className="w-[120px] flex items-center justify-center px-6 py-4 text-xl font-bold text-[#5E5151]">
+                  <tr key={row.id} className="border-b border-[#3F5210]/10 last:border-0 hover:bg-[#F2EEDA] transition-colors font-poppins text-xs">
+                    <td className="px-4 py-4 font-bold text-[#5E5151] text-center">
                       #{String(index + 1).padStart(3, '0')}
-                    </div>
-                    <div className="flex-[1.5] flex items-center px-6 py-4 text-xl font-bold text-[#190B02]">
+                    </td>
+                    <td className="px-4 py-4 font-bold text-[#190B02]">
                       {row.title}
-                    </div>
-                    <div className="w-[200px] flex items-center px-6 py-4 text-xl font-bold text-[#5E5151]">
+                    </td>
+                    <td className="px-4 py-4 font-semibold text-[#5E5151]">
                       Infrastruktur
-                    </div>
-                    <div className="w-[220px] flex items-center px-6 py-4 text-xl font-medium text-[#5E5151]">
+                    </td>
+                    <td className="px-4 py-4 font-medium text-[#5E5151]">
                       {new Date(row.createdAt).toLocaleDateString('id-ID', {
-                        day: 'numeric', month: 'long', year: 'numeric'
+                        day: 'numeric', month: 'short', year: 'numeric'
                       })}
-                    </div>
-                    <div className="flex-1 flex items-center px-6 py-4 text-xl font-medium text-[#5E5151]">
+                    </td>
+                    <td className="px-4 py-4 font-medium text-[#5E5151]">
                       {row.location}
-                    </div>
-                    <div className="w-[200px] flex items-center justify-center px-6 py-4">
+                    </td>
+                    <td className="px-4 py-4 text-center">
                       <StatusDropdown
                         value={row.status}
                         onChange={(v) => updateStatus(row.id, v)}
                       />
-                    </div>
-                    <div className="w-[140px] flex items-center justify-center px-6 py-4">
+                    </td>
+                    <td className="px-4 py-4 text-center">
                       <button 
                         onClick={() => handleOpenDetail(row.id)}
-                        className="px-8 py-2.5 bg-[#5D6B1D] rounded-2xl text-xl font-bold text-white hover:bg-[#4D5B1A] transition-colors shadow-sm"
+                        className="px-5 py-1.5 bg-[#E6E5D9] rounded-full font-bold text-[#5E5151] hover:bg-[#D5D4C8] transition-colors shadow-sm"
                       >
                         Detail
                       </button>
-                    </div>
-                  </div>
+                    </td>
+                  </tr>
                 ))
               )}
-            </div>
-          </div>
+            </tbody>
+          </table>
         </div>
 
+        {/* Paginasi Box */}
         {!loading && total > 0 && (
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 mt-4">
-            <span className="text-[28px] font-bold text-[#190B02] font-poppins">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-1">
+            <span className="text-sm font-bold text-[#190B02] font-poppins">
               Menampilkan {data.length} dari {total} Laporan
             </span>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               <button 
                 onClick={() => handlePageChange(Math.max(1, page - 1))}
                 disabled={page === 1}
-                className="w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] disabled:opacity-50"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] disabled:opacity-50 text-xs shadow-sm"
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
@@ -204,8 +201,8 @@ export default function TabelLaporanAdmin({ status }: { status: string }) {
                 <button
                   key={i + 1}
                   onClick={() => handlePageChange(i + 1)}
-                  className={`w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] font-bold text-2xl transition-all
-                    ${page === i + 1 ? "bg-[#3F5210] text-[#FDF5E3]" : "bg-[#ECEEE7] text-[#3F5210] hover:bg-white shadow-sm"}
+                  className={`w-8 h-8 flex items-center justify-center rounded-full border border-[#3F5210] font-bold text-sm transition-all shadow-sm
+                    ${page === i + 1 ? "bg-[#3F5210] text-[#FDF5E3]" : "bg-[#ECEEE7] text-[#3F5210] hover:bg-white"}
                   `}
                 >
                   {i + 1}
@@ -215,9 +212,9 @@ export default function TabelLaporanAdmin({ status }: { status: string }) {
               <button 
                 onClick={() => handlePageChange(Math.min(totalPages, page + 1))}
                 disabled={page === totalPages}
-                className="w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] disabled:opacity-50"
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] disabled:opacity-50 text-xs shadow-sm"
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
@@ -226,7 +223,6 @@ export default function TabelLaporanAdmin({ status }: { status: string }) {
         )}
       </div>
 
-      {/* Modal Detail Laporan */}
       {isDetailOpen && selectedReportId && (
         <DetailReportModal 
           reportId={selectedReportId} 

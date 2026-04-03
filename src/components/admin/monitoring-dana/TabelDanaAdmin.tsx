@@ -28,74 +28,77 @@ export default function TabelDanaAdmin() {
   const columns = ["No", "Program", "Sumber Dana", "Jumlah", "Tanggal Laporan", "Aksi"];
 
   return (
-    <div className="w-full bg-[#E6E5D9] rounded-[35px] p-8 md:p-10 flex flex-col gap-8 shadow-sm">
-      <h2 className="text-[36px] font-bold text-[#190B02] font-poppins">
+    <div className="w-full bg-[#E6E5D9] rounded-2xl p-4 md:p-6 flex flex-col gap-5 shadow-sm">
+      <h2 className="text-lg md:text-xl font-bold text-[#190B02] font-poppins">
         Dana Masuk
       </h2>
 
-      <div className="w-full overflow-x-auto">
-        <div className="min-w-[1000px] rounded-[25px] overflow-hidden border border-[#3F5210]/10">
-          <div className="flex flex-row bg-[#3F5210] text-[#FDF5E3] font-poppins h-[70px]">
-            {columns.map((col) => (
-              <div
-                key={col}
-                className={`flex items-center px-6 py-5 text-xl font-bold border-r border-[#ECEEE7]/10 last:border-0
-                  ${col === "No"              ? "w-[80px] justify-center" : ""}
-                  ${col === "Program"         ? "flex-[1.5]" : ""}
-                  ${col === "Sumber Dana"     ? "w-[240px]" : ""}
-                  ${col === "Jumlah"          ? "w-[240px]" : ""}
-                  ${col === "Tanggal Laporan" ? "w-[220px]" : ""}
-                  ${col === "Aksi"            ? "w-[140px] justify-center" : ""}
-                `}
-              >
-                {col}
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-[#FDF5E3]">
+      {/* Tabel Container dengan rounded corners */}
+      <div className="w-full overflow-x-auto rounded-xl border border-[#3F5210]/10 shadow-sm">
+        <table className="w-full min-w-[700px] border-collapse">
+          <thead className="bg-[#3F5210] text-[#FDF5E3] font-poppins text-xs font-bold">
+            <tr>
+              {columns.map((col) => (
+                <th
+                  key={col}
+                  className={`px-4 py-4 text-left border-r border-[#ECEEE7]/10 last:border-0
+                    ${col === "No"              ? "w-[60px] text-center" : ""}
+                    ${col === "Program"         ? "" : ""}
+                    ${col === "Sumber Dana"     ? "w-[150px]" : ""}
+                    ${col === "Jumlah"          ? "w-[160px]" : ""}
+                    ${col === "Tanggal Laporan" ? "w-[140px]" : ""}
+                    ${col === "Aksi"            ? "w-[90px] text-center" : ""}
+                  `}
+                >
+                  {col}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="bg-[#FDF5E3]">
             {data.map((row, index) => (
-              <div key={row.id} className="flex flex-row border-b border-[#3F5210]/10 last:border-0 hover:bg-[#F2EEDA] transition-colors font-poppins min-h-[80px]">
-                <div className="w-[80px] flex items-center justify-center px-6 py-4 text-xl font-bold text-[#5E5151]">
+              <tr key={row.id} className="border-b border-[#3F5210]/10 last:border-0 hover:bg-[#F2EEDA] transition-colors font-poppins text-xs">
+                <td className="px-4 py-4 font-bold text-[#5E5151] text-center">
                   {index + 1}
-                </div>
-                <div className="flex-[1.5] flex items-center px-6 py-4 text-xl font-bold text-[#190B02]">
+                </td>
+                <td className="px-4 py-4 font-bold text-[#190B02]">
                   {row.program}
-                </div>
-                <div className="w-[240px] flex items-center px-6 py-4 text-xl font-bold text-[#5E5151]">
+                </td>
+                <td className="px-4 py-4 font-medium text-[#5E5151]">
                   {row.source}
-                </div>
-                <div className="w-[240px] flex items-center px-6 py-4 text-xl font-bold text-[#5E5151]">
+                </td>
+                <td className="px-4 py-4 font-medium text-[#5E5151]">
                   Rp {row.amount.toLocaleString('id-ID')}
-                </div>
-                <div className="w-[220px] flex items-center px-6 py-4 text-xl font-medium text-[#5E5151]">
+                </td>
+                <td className="px-4 py-4 font-medium text-[#5E5151]">
                   {row.date}
-                </div>
-                <div className="w-[140px] flex items-center justify-center px-6 py-4">
-                  <button className="px-10 py-2.5 bg-[#999999] rounded-2xl text-xl font-bold text-[#190B02] hover:bg-[#888] transition-colors">
+                </td>
+                <td className="px-4 py-4 text-center">
+                  <button className="px-5 py-1.5 bg-[#E6E5D9] rounded-full font-bold text-[#5E5151] hover:bg-[#D5D4C8] transition-colors shadow-sm">
                     Edit
                   </button>
-                </div>
-              </div>
+                </td>
+              </tr>
             ))}
-          </div>
-        </div>
+          </tbody>
+        </table>
       </div>
 
-      <div className="flex flex-col md:flex-row items-center justify-between gap-6 mt-4">
-        <span className="text-2xl font-bold text-[#190B02] font-poppins">
+      {/* Footer Paginasi */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-1">
+        <span className="text-sm font-bold text-[#190B02] font-poppins">
           Menampilkan {data.length} dari {total} Dana Masuk
         </span>
 
-        <div className="flex gap-4">
-          <button className="w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] bg-[#3F5210] text-[#FDF5E3] font-bold text-2xl shadow-md">
+        <div className="flex gap-2">
+          <button className="w-8 h-8 flex items-center justify-center rounded-full border border-[#3F5210] bg-[#3F5210] text-[#FDF5E3] font-bold text-sm shadow-sm">
             1
           </button>
-          <button className="w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] font-bold text-2xl hover:bg-white transition-all shadow-sm">
+          <button className="w-8 h-8 flex items-center justify-center rounded-full border border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] font-bold text-sm hover:bg-white transition-all shadow-sm">
             2
           </button>
-          <button className="w-14 h-11 flex items-center justify-center rounded-2xl border-2 border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] hover:bg-white transition-all shadow-sm">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <button className="w-8 h-8 flex items-center justify-center rounded-full border border-[#3F5210] bg-[#ECEEE7] text-[#3F5210] hover:bg-white transition-all shadow-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </button>

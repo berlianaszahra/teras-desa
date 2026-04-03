@@ -10,10 +10,10 @@ export default function DashboardAdmin() {
   const [selectedStatus, setSelectedStatus] = useState("Semua");
 
   return (
-    <div className="flex flex-col gap-10 pb-20 overflow-hidden">
+    <div className="flex flex-col gap-6 pb-12 overflow-hidden">
       <HeaderAdmin />
 
-      <div className="flex flex-col gap-10 px-6 md:px-[60px]">
+      <div className="flex flex-col gap-6 px-4 md:px-8">
         <StatsAdmin />
         <FilterChartAdmin activeStatus={selectedStatus} onFilterChange={setSelectedStatus} />
         <TabelLaporanAdmin status={selectedStatus} />
